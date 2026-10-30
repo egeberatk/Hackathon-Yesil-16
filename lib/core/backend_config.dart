@@ -1,7 +1,13 @@
 import 'package:flutter/foundation.dart';
 
 class BackendConfig {
-  static const baseUrl = String.fromEnvironment('BACKEND_URL');
+  // USB debugging: adb reverse tcp:8000 tcp:8000 forwards this device-local
+  // address to the computer. An explicit --dart-define always takes priority.
+  // Profile/release must specify an HTTPS backend; no local fallback is shipped.
+  static const baseUrl = String.fromEnvironment(
+    'BACKEND_URL',
+    defaultValue: kDebugMode ? 'http://127.0.0.1:8000' : '',
+  );
 
   static Uri analyzeUri(String baseUrl) {
     final uri = Uri.tryParse(baseUrl.trim());

@@ -84,7 +84,7 @@ class AnalysisService {
       );
     } catch (_) {
       throw const AnalysisException(
-        'Backend bağlantısı kurulamadı. Aynı Wi-Fi ağında olduğunu ve sunucu adresini kontrol et veya manuel giriş kullan.',
+        'Backend bağlantısı kurulamadı. Sunucunun çalıştığını ve bağlantı ayarlarını kontrol et veya manuel giriş kullan.',
       );
     } finally {
       client.close();

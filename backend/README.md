@@ -25,7 +25,36 @@ backend/.venv/Scripts/python.exe -m uvicorn backend.app:app --host 0.0.0.0 --por
 Kontrol adresleri: `http://127.0.0.1:8000/health` ve `http://127.0.0.1:8000/docs`.
 `/health` yalnızca backend'in çalıştığını gösterir; Gemini anahtarını/model erişimini doğrulamaz.
 
-İkinci terminalde bilgisayarın Wi-Fi IPv4 adresini `ipconfig` ile bulun:
+## Android fiziksel cihaz: USB + adb reverse
+
+Flutter'ın okuduğu derleme değişkeni **BACKEND_URL**'dir; `API_BASE_URL` kullanılmaz.
+Python `backend/.env` dosyası Flutter tarafından okunmaz. FastAPI çalışırken USB hata
+ayıklaması açık ve bilgisayara izin vermiş fiziksel Android telefonu bağlayın.
+Depo kökünde ikinci bir PowerShell terminalinde:
+
+```powershell
+& "$env:LOCALAPPDATA/Android/sdk/platform-tools/adb.exe" -d reverse tcp:8000 tcp:8000
+& "$env:LOCALAPPDATA/Android/sdk/platform-tools/adb.exe" -d reverse --list
+flutter run --debug --dart-define=BACKEND_URL=http://127.0.0.1:8000
+```
+
+`adb` PATH'teyse ilk komut `adb -d reverse tcp:8000 tcp:8000` olarak da çalışır.
+Birden çok fiziksel cihaz varsa `adb devices -l` ile seri numarasını bulun ve
+`-d` yerine `-s SERI_NUMARASI` kullanın; Flutter komutuna da `-d SERI_NUMARASI` ekleyin.
+Bu yönlendirmeyle telefondaki `127.0.0.1:8000`, bilgisayardaki 8000 portuna ulaşır;
+aynı Wi-Fi ağı veya bilgisayarın LAN IP'si gerekmez. USB bağlantısı/ADB yeniden
+başlatılırsa yönlendirmeyi tekrar kurun. Gerekirse `adb -d reverse --remove tcp:8000`
+ile yalnızca bu yönlendirmeyi kaldırabilirsiniz.
+
+Debug sürümünde `BACKEND_URL` verilmezse varsayılan `http://127.0.0.1:8000` kullanılır;
+USB yönlendirmesi yine gereklidir. Açıkça verilen `--dart-define` varsayılanı ezer.
+Adres, derleme zamanı ayarıdır; değiştirdikten sonra uygulamayı durdurup doğru
+komutla yeniden `flutter run` çalıştırın. Hot reload mevcut derleme ayarını değiştirmez.
+Profile/release sürümlerinde yerel varsayılan yoktur ve HTTPS zorunludur.
+
+## Wi-Fi ile alternatif bağlantı
+
+Bilgisayarın Wi-Fi IPv4 adresini `ipconfig` ile bulun:
 
 ```powershell
 flutter run --dart-define=BACKEND_URL=http://192.168.1.20:8000
@@ -36,7 +65,7 @@ Telefon ve bilgisayar aynı Wi-Fi ağında olmalı. Telefonda `localhost` bilgis
 göstermez. Android emülatörde bilgisayara erişim için `http://10.0.2.2:8000` kullanılır.
 Gerekirse Windows güvenlik duvarında yalnızca özel ağ için Python/8000 erişimine izin verin;
 misafir ağları cihazlar arası erişimi engelleyebilir. Adres değişince uygulamayı yeniden başlatın.
-Adres verilmezse analiz anlaşılır hata verir; manuel ve örnek veri seçenekleri çalışır.
+Manuel ve örnek veri seçenekleri backend bağlantısı olmadan da çalışır.
 
 ## Akış ve sözleşme
 

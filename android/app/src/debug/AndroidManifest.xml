@@ -5,7 +5,7 @@
          to allow setting breakpoints, to provide hot reload, etc.
     -->
     <uses-permission android:name="android.permission.INTERNET"/>
-    <!-- Local LAN development only. Release/profile keep HTTPS required. -->
+    <!-- Local USB reverse / LAN development only. Release/profile require HTTPS. -->
     <application android:usesCleartextTraffic="true"
         tools:replace="android:usesCleartextTraffic"/>
 </manifest>
