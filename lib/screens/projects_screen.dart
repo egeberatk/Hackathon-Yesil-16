@@ -1,59 +1,64 @@
 import 'package:flutter/material.dart';
 
+import '../core/app_theme.dart';
 import '../models/material_item.dart';
-import '../services/demo_data_service.dart';
-import '../widgets/page_body.dart';
-import '../widgets/project_card.dart';
+import '../services/recipe_repository.dart';
+import '../widgets/recipe_library.dart';
+import '../widgets/recipe_badge.dart';
 
 class ProjectsScreen extends StatelessWidget {
-  const ProjectsScreen({super.key, required this.items});
+  const ProjectsScreen({super.key, required this.items, this.repository});
   final List<MaterialItem> items;
+  final RecipeRepository? repository;
   @override
-  Widget build(BuildContext context) {
-    final projects = [...DemoDataService.projects]
-      ..sort(
-        (a, b) => (DemoDataService.canMake(b, items) ? 1 : 0).compareTo(
-          DemoDataService.canMake(a, items) ? 1 : 0,
-        ),
-      );
-    return Scaffold(
-      appBar: AppBar(title: const Text('Dönüşüm fikirleri')),
-      body: PageBody(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const Text('3 / 3 · Projeni seç'),
-            const SizedBox(height: 16),
-            Text(
-              'Yeni hikâyeni seç.',
-              style: Theme.of(context).textTheme.headlineMedium,
+  Widget build(BuildContext context) => Scaffold(
+    appBar: AppBar(title: const Text('Dönüşüm fikirleri')),
+    body: RecipeLibrary(
+      items: items,
+      repository: repository,
+      scrollable: true,
+      header: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const Align(
+            alignment: Alignment.centerLeft,
+            child: RecipeBadge(
+              label: '03 · Projeni seç',
+              icon: Icons.lightbulb_outline,
             ),
-            const SizedBox(height: 12),
-            const Text(
-              'Örnek tarifler, onayladığın malzemelerin yeterliliğine göre sıralandı. Yardımcı malzemeleri tarifte kontrol et.',
-            ),
-            const SizedBox(height: 16),
-            Wrap(
-              spacing: 8,
-              runSpacing: 8,
-              children: items
-                  .map(
-                    (item) => Chip(
-                      label: Text('${item.quantity} × ${item.type.label}'),
-                    ),
-                  )
-                  .toList(),
-            ),
-            const SizedBox(height: 24),
-            ...projects.map(
-              (project) => ProjectCard(
-                project: project,
-                available: DemoDataService.canMake(project, items),
-              ),
-            ),
-          ],
-        ),
+          ),
+          const SizedBox(height: 16),
+          Text(
+            'Yeni hikâyeni seç.',
+            style: Theme.of(context).textTheme.headlineMedium,
+          ),
+          const SizedBox(height: 8),
+          Text(
+            'Onayladığın malzemelerle başlayabileceğin fikirler. Eksik olanları da açıkça görebilirsin.',
+            style: Theme.of(context).textTheme.bodyMedium
+                ?.copyWith(color: AppTheme.muted),
+          ),
+          const SizedBox(height: 16),
+          Wrap(
+            spacing: 8,
+            runSpacing: 8,
+            children: items
+                .where(
+                  (item) =>
+                      !item.requiresConfirmation &&
+                      item.type != WasteType.unknown,
+                )
+                .map(
+                  (item) => RecipeBadge(
+                    label: '${item.quantity} × ${item.type.label}',
+                    icon: Icons.check_outlined,
+                  ),
+                )
+                .toList(),
+          ),
+          const SizedBox(height: 24),
+        ],
       ),
-    );
-  }
+    ),
+  );
 }

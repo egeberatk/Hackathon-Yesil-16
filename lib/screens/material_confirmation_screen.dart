@@ -1,13 +1,18 @@
 import 'package:flutter/material.dart';
 
+import '../core/app_theme.dart';
 import '../models/material_item.dart';
 import '../services/demo_data_service.dart';
+import '../widgets/flow_notice.dart';
+import '../widgets/material_card.dart';
+import '../widgets/material_editor.dart';
 import '../widgets/page_body.dart';
+import '../widgets/recipe_badge.dart';
 import 'projects_screen.dart';
 
 class MaterialConfirmationScreen extends StatefulWidget {
   const MaterialConfirmationScreen({super.key, this.initialItems});
-  // null: örnek veri, boş liste: manuel giriş, dolu liste: analiz sonucu.
+  // null: example list; []: manual entry. Every detected row needs user consent.
   final List<MaterialItem>? initialItems;
   @override
   State<MaterialConfirmationScreen> createState() =>
@@ -17,107 +22,57 @@ class MaterialConfirmationScreen extends StatefulWidget {
 class _MaterialConfirmationScreenState
     extends State<MaterialConfirmationScreen> {
   late final List<MaterialItem> _items =
-      widget.initialItems?.map((item) => item.copy()).toList() ??
-      DemoDataService.materials();
+      (widget.initialItems ?? DemoDataService.materials())
+          .map((item) => item.copy()..requiresConfirmation = true)
+          .toList();
+  bool _editing = false;
+  bool _finding = false;
+  List<MaterialItem> get _confirmed => _items
+      .where(
+        (item) => !item.requiresConfirmation && item.type != WasteType.unknown,
+      )
+      .toList();
+
   Future<void> _edit({MaterialItem? item}) async {
-    var type = item?.type ?? WasteType.glass;
-    final count = TextEditingController(text: '${item?.quantity ?? 1}');
-    final name = TextEditingController(
-      text: item?.name ?? WasteType.glass.label,
-    );
-    final form = GlobalKey<FormState>();
-    final result = await showDialog<MaterialItem>(
-      context: context,
-      builder: (context) => AlertDialog(
-        title: Text(item == null ? 'Malzeme ekle' : 'Malzemeyi düzenle'),
-        content: Form(
-          key: form,
-          child: SingleChildScrollView(
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                TextFormField(
-                  key: const Key('material-name'),
-                  controller: name,
-                  maxLength: 120,
-                  decoration: const InputDecoration(labelText: 'Nesne adı'),
-                  validator: (value) => value == null || value.trim().isEmpty
-                      ? 'Nesne adını gir.'
-                      : null,
-                ),
-                const SizedBox(height: 16),
-                DropdownButtonFormField<WasteType>(
-                  initialValue: type,
-                  isExpanded: true,
-                  decoration: const InputDecoration(labelText: 'Malzeme türü'),
-                  validator: (value) =>
-                      value == null || value == WasteType.unknown
-                      ? 'Uygun bir tür seç veya nesneyi listeden sil.'
-                      : null,
-                  items: WasteType.values
-                      .map(
-                        (value) => DropdownMenuItem(
-                          value: value,
-                          child: Text(value.label),
-                        ),
-                      )
-                      .toList(),
-                  onChanged: (value) {
-                    if (value != null) type = value;
-                  },
-                ),
-                const SizedBox(height: 16),
-                TextFormField(
-                  key: const Key('material-quantity'),
-                  controller: count,
-                  decoration: const InputDecoration(labelText: 'Adet'),
-                  keyboardType: TextInputType.number,
-                  validator: (value) {
-                    final number = int.tryParse(value ?? '');
-                    return number == null || number < 1 || number > 999
-                        ? '1 ile 999 arasında tam sayı gir.'
-                        : null;
-                  },
-                ),
-              ],
-            ),
-          ),
-        ),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(context),
-            child: const Text('Vazgeç'),
-          ),
-          FilledButton(
-            onPressed: () {
-              if (form.currentState!.validate()) {
-                Navigator.pop(
-                  context,
-                  MaterialItem(
-                    type: type,
-                    name: name.text.trim(),
-                    quantity: int.parse(count.text),
-                  ),
-                );
-              }
-            },
-            child: const Text('Kaydet'),
-          ),
-        ],
-      ),
-    );
-    // Diyalog kapanış animasyonu sırasında denetleyicinin kullanımı sürebilir.
-    await Future<void>.delayed(const Duration(milliseconds: 300));
-    count.dispose();
-    name.dispose();
-    if (!mounted || result == null) return;
-    setState(() {
-      if (item == null) {
-        _items.add(result);
-      } else {
-        _items[_items.indexOf(item)] = result;
-      }
-    });
+    if (_editing) return;
+    _editing = true;
+    try {
+      final result = await showModalBottomSheet<MaterialItem>(
+        context: context,
+        isScrollControlled: true,
+        useSafeArea: true,
+        builder: (_) => MaterialEditor(item: item),
+      );
+      if (!mounted || result == null) return;
+      setState(() {
+        if (item == null) {
+          _items.add(result);
+        } else {
+          _items[_items.indexOf(item)] = result;
+        }
+      });
+    } finally {
+      _editing = false;
+    }
+  }
+
+  void _quantity(MaterialItem item, int delta) => setState(() {
+    item.quantity = (item.quantity + delta).clamp(1, 999);
+    item.requiresConfirmation = true;
+  });
+
+  Future<void> _findRecipes() async {
+    if (_finding || _confirmed.isEmpty) return;
+    final items = _confirmed.map((item) => item.copy()).toList();
+    setState(() => _finding = true);
+    try {
+      await Navigator.push(
+        context,
+        MaterialPageRoute<void>(builder: (_) => ProjectsScreen(items: items)),
+      );
+    } finally {
+      if (mounted) setState(() => _finding = false);
+    }
   }
 
   @override
@@ -127,91 +82,105 @@ class _MaterialConfirmationScreenState
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          const Text('2 / 3 · Malzemeler'),
+          const Align(
+            alignment: Alignment.centerLeft,
+            child: RecipeBadge(
+              label: '02 · Malzemeler',
+              icon: Icons.fact_check_outlined,
+            ),
+          ),
           const SizedBox(height: 16),
           Text(
-            'Elinde neler var?',
+            'Elindekiler, yeni fikirlerin.',
             style: Theme.of(context).textTheme.headlineMedium,
           ),
-          const SizedBox(height: 12),
+          const SizedBox(height: 8),
           Text(
             widget.initialItems == null
-                ? 'Bu liste örnektir; fotoğraftan tespit edilmedi. Tür ve adetleri kontrol et, eksikleri ekle.'
-                : 'Nesne, tür ve adetleri kontrol et. Onay gereken nesneleri düzenleyip kaydet veya sil. Bilinmeyen nesneleri uygun olmayan bir türe zorlama.',
+                ? 'Bu liste örnektir; fotoğraftan tespit edilmedi. Malzemelerini kontrol edip onayla.'
+                : 'Türleri ve adetleri kontrol et. Yalnızca onayladığın malzemelerle tarif arayacağız.',
+            style: Theme.of(context).textTheme.bodyMedium
+                ?.copyWith(color: AppTheme.muted),
           ),
           const SizedBox(height: 24),
           if (_items.isEmpty)
-            const Padding(
-              padding: EdgeInsets.all(24),
-              child: Text('Henüz malzeme yok. Bir malzeme ekleyerek başla.'),
+            const FlowNotice(
+              title: 'Malzemelerini ekle',
+              message: 'Henüz malzeme yok. Bir malzeme ekleyerek başla.',
+            )
+          else
+            Padding(
+              padding: const EdgeInsets.only(bottom: 16),
+              child: Text(
+                _confirmed.isEmpty
+                    ? 'Henüz onayladığın malzeme yok. Kartlardan seçim yap.'
+                    : 'Onaylanmayan malzemeler tarif aramasına katılmaz.',
+                style: Theme.of(context).textTheme.bodySmall,
+              ),
             ),
           ..._items.map(
-            (item) => Card(
-              child: Padding(
-                padding: const EdgeInsets.all(12),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    Text(
-                      item.name,
-                      style: Theme.of(context).textTheme.titleMedium,
-                    ),
-                    Text(item.type.label),
-                    if (item.requiresConfirmation ||
-                        item.type == WasteType.unknown)
-                      Text(
-                        item.type == WasteType.unknown
-                            ? 'Bilinmeyen nesne · Tür seçimi veya silme gerekli'
-                            : 'Onay gerekli · ${item.confidence == 'uncertain' ? 'Belirsiz tespit' : 'Lütfen kontrol et'}',
-                      ),
-                    Row(
-                      children: [
-                        Expanded(child: Text('${item.quantity} adet')),
-                        IconButton(
-                          tooltip: 'Malzemeyi düzenle',
-                          onPressed: () => _edit(item: item),
-                          icon: const Icon(Icons.edit_outlined),
-                        ),
-                        IconButton(
-                          tooltip: 'Malzemeyi sil',
-                          onPressed: () => setState(() => _items.remove(item)),
-                          icon: const Icon(Icons.delete_outline),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
+            (item) => MaterialCard(
+              key: ObjectKey(item),
+              item: item,
+              onEdit: () => _edit(item: item),
+              onRemove: () => setState(() => _items.remove(item)),
+              onQuantity: (delta) => _quantity(item, delta),
+              onConfirm: () => setState(
+                () => item.requiresConfirmation = !item.requiresConfirmation,
               ),
             ),
           ),
-          const SizedBox(height: 12),
+          const SizedBox(height: 16),
           OutlinedButton.icon(
             onPressed: () => _edit(),
-            icon: const Icon(Icons.add),
+            icon: const Icon(Icons.add_outlined),
             label: const Text('Malzeme ekle'),
           ),
           const SizedBox(height: 24),
-          FilledButton.icon(
-            onPressed:
-                _items.isEmpty ||
-                    _items.any(
-                      (item) =>
-                          item.requiresConfirmation ||
-                          item.type == WasteType.unknown,
-                    )
-                ? null
-                : () => Navigator.push(
-                    context,
-                    MaterialPageRoute<void>(
-                      builder: (_) => ProjectsScreen(
-                        items: _items.map((item) => item.copy()).toList(),
-                      ),
-                    ),
-                  ),
-            icon: const Icon(Icons.auto_awesome),
-            label: const Text('Onayla ve projeleri gör'),
-          ),
         ],
+      ),
+    ),
+    bottomNavigationBar: DecoratedBox(
+      decoration: const BoxDecoration(
+        color: Colors.white,
+        border: Border(top: BorderSide(color: AppTheme.border)),
+      ),
+      child: SafeArea(
+        top: false,
+        child: Padding(
+          padding: EdgeInsets.symmetric(
+            horizontal: AppTheme.pageInset(MediaQuery.sizeOf(context).width),
+            vertical: 16,
+          ),
+          child: Center(
+            heightFactor: 1,
+            child: ConstrainedBox(
+              constraints: const BoxConstraints(maxWidth: 632),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Text(
+                    _confirmed.isEmpty
+                        ? 'Devam etmek için en az bir malzemeyi onayla.'
+                        : 'Yalnızca onayladığın malzemeler kullanılacak.',
+                    textAlign: TextAlign.center,
+                    style: Theme.of(context).textTheme.bodySmall,
+                  ),
+                  const SizedBox(height: 12),
+                  FilledButton.icon(
+                    key: const Key('find-recipes'),
+                    onPressed: _confirmed.isEmpty || _finding
+                        ? null
+                        : _findRecipes,
+                    icon: const Icon(Icons.arrow_forward_outlined),
+                    label: const Text('Tarifleri Bul'),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ),
       ),
     ),
   );

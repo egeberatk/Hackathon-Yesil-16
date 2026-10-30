@@ -176,7 +176,7 @@ void main() {
     expect(
       tester
           .widget<FilledButton>(
-            find.widgetWithText(FilledButton, 'Onayla ve projeleri gör'),
+            find.widgetWithText(FilledButton, 'Tarifleri Bul'),
           )
           .onPressed,
       isNull,
@@ -242,7 +242,7 @@ void main() {
     expect(
       tester
           .widget<FilledButton>(
-            find.widgetWithText(FilledButton, 'Onayla ve projeleri gör'),
+            find.widgetWithText(FilledButton, 'Tarifleri Bul'),
           )
           .onPressed,
       isNotNull,
