@@ -19,6 +19,7 @@ import 'package:hackathon_projesi/services/recipe_matching_service.dart';
 import 'package:hackathon_projesi/widgets/project_card.dart';
 import 'package:hackathon_projesi/widgets/recipe_step_card.dart';
 import 'package:hackathon_projesi/widgets/recipe_step_viewer.dart';
+import 'package:hackathon_projesi/widgets/recipe_motion_player.dart';
 
 class CatalogAssets extends CachingAssetBundle {
   CatalogAssets(this.source);
@@ -236,7 +237,7 @@ void main() {
       );
       expect(
         tester.widget<RecipeStepCard>(find.byType(RecipeStepCard)).media,
-        isNull,
+        isA<RecipeMotionPlayer>(),
       );
       expect(
         tester

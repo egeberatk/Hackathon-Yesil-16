@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 
 import '../models/upcycling_project.dart';
+import '../animations/pet_planter_steps.dart';
+import 'pet_planter_scene.dart';
+import 'recipe_motion_player.dart';
 import 'recipe_step_card.dart';
 
 typedef RecipeStepMediaBuilder = Widget? Function(
@@ -38,6 +41,22 @@ class _RecipeStepViewerState extends State<RecipeStepViewer> {
     widget.onStepChanged?.call(next);
   }
 
+  Widget? _media(BuildContext context) {
+    if (widget.mediaBuilder != null) {
+      return widget.mediaBuilder!(context, widget.project, _index);
+    }
+    final step = PetPlanterSteps.resolve(widget.project, _index);
+    if (step == null) return null;
+    return RecipeMotionPlayer(
+      key: ValueKey('${widget.project.id}-motion-$_index'),
+      sequence: step.sequence,
+      description: step.description,
+      warning: step.warning,
+      sceneBuilder: (context, frame) =>
+          PetPlanterScene(frame: frame, stepIndex: _index),
+    );
+  }
+
   @override
   Widget build(BuildContext context) => Column(
     crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -48,7 +67,7 @@ class _RecipeStepViewerState extends State<RecipeStepViewer> {
           number: _index + 1,
           total: widget.project.steps.length,
           text: widget.project.steps[_index],
-          media: widget.mediaBuilder?.call(context, widget.project, _index),
+          media: _media(context),
         ),
       ),
       const SizedBox(height: 16),
