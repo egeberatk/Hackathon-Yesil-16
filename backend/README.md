@@ -87,7 +87,7 @@ Boş bir analiz sonucu demo malzemelerle doldurulmaz.
 ```
 
 Standart kimlikler: `pet_bottle`, `plastic_cap`, `cardboard_box`, `cardboard_roll`,
-`clean_paper`, `glass_jar`, `metal_can`, `plastic_packaging`.
+`clean_paper`, `glass_jar`, `metal_can`, `plastic_packaging`, `yogurt_container`, `egg_carton`.
 `confidence`: `certain` veya `uncertain`. Adet 1–999, nesne adı 1–120 karakter;
 bir yanıtta en fazla 50 satır bulunabilir.
 Desteklenmeyen kimlikler adları korunarak `material_id: null`, `confidence: uncertain`,

@@ -7,6 +7,8 @@ enum WasteType {
   cardboardRoll('Karton rulo', 'cardboard_roll'),
   cleanPaper('Temiz kağıt', 'clean_paper'),
   plasticPackaging('Plastik ambalaj', 'plastic_packaging'),
+  yogurtContainer('Yoğurt kabı', 'yogurt_container'),
+  eggCarton('Yumurta kolisi', 'egg_carton'),
   unknown('Bilinmeyen / onay gerekli', null);
 
   const WasteType(this.label, this.materialId);

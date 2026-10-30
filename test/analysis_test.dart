@@ -57,7 +57,10 @@ Future<void> pumpPreview(
 
 void main() {
   test('Standart kimlikler korunur; bilinmeyenler zorla eşlenmez', () {
-    expect(WasteType.values.where((type) => type.materialId != null).length, 8);
+    expect(
+      WasteType.values.where((type) => type.materialId != null).length,
+      10,
+    );
     for (final type in WasteType.values) {
       expect(WasteType.fromId(type.materialId), type);
     }
@@ -211,15 +214,20 @@ void main() {
         ),
       ),
     );
+    await tester.ensureVisible(find.byTooltip('Malzemeyi düzenle'));
     await tester.tap(find.byTooltip('Malzemeyi düzenle'));
     await tester.pumpAndSettle();
+    await tester.ensureVisible(find.text('Kaydet'));
     await tester.tap(find.text('Kaydet'));
     await tester.pumpAndSettle();
     expect(
       find.text('Uygun bir tür seç veya nesneyi listeden sil.'),
       findsOneWidget,
     );
+    await tester.ensureVisible(find.byType(DropdownButtonFormField<WasteType>));
     await tester.tap(find.byType(DropdownButtonFormField<WasteType>));
+    await tester.pumpAndSettle();
+    await tester.ensureVisible(find.text('Cam kavanoz').last);
     await tester.pumpAndSettle();
     await tester.tap(find.text('Cam kavanoz').last);
     await tester.pumpAndSettle();
@@ -227,6 +235,7 @@ void main() {
       find.byKey(const Key('material-name')),
       'Küçük kavanoz',
     );
+    await tester.ensureVisible(find.text('Kaydet'));
     await tester.tap(find.text('Kaydet'));
     await tester.pumpAndSettle();
     expect(find.text('Küçük kavanoz'), findsOneWidget);

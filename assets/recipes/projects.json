@@ -1,0 +1,755 @@
+{
+  "approved_ids": [
+    "project_01",
+    "project_02",
+    "project_03",
+    "project_05",
+    "project_06",
+    "project_15",
+    "project_19",
+    "project_20",
+    "project_26",
+    "project_28",
+    "project_38",
+    "project_39",
+    "project_40",
+    "project_41",
+    "project_42",
+    "project_43",
+    "project_44",
+    "project_45",
+    "project_46",
+    "project_47",
+    "project_48"
+  ],
+  "projects": [
+    {
+      "id": "project_01",
+      "name": "Karton Rulo Masa Düzenleyici",
+      "description": "Kalemleri ve kırtasiye malzemelerini gruplamak için pratik bir masaüstü düzenleyici.",
+      "required_materials": [
+        {
+          "material_id": "cardboard_roll",
+          "quantity": 3,
+          "name": "Karton rulo"
+        },
+        {
+          "material_id": "cardboard_box",
+          "quantity": 1,
+          "name": "Karton kutu"
+        }
+      ],
+      "required_supplies": [
+        "Bant"
+      ],
+      "optional_supplies": [
+        "Renkli kalemler"
+      ],
+      "category": "organizasyon",
+      "difficulty": "kolay",
+      "estimated_minutes": 10,
+      "steps": [
+        "Karton kutunun kapak kısımlarından birini katlama yerinden esneterek koparın ve düz bir zemin olarak kullanın.",
+        "Karton ruloları yan yana gelecek şekilde bu düz zeminin üzerine dik olarak yerleştirin.",
+        "Ruloları alt kısımlarından zemin kartonuna bantlayarak sabitleyin.",
+        "Birbirine değen ruloları üst kısımlarından da bantlayarak daha sağlam hale getirin.",
+        "Kalemlerinizi ruloların içine yerleştirerek masanızı düzenleyin."
+      ],
+      "practical_use": "Masaüstündeki dağınıklığı toplar ve kırtasiye malzemelerini sınıflandırır.",
+      "safety_warning": "Karton kenarları hafif cilt çiziklerine yol açabilir, parçaları ayırırken yavaş ve dikkatli hareket edin.",
+      "image_prompt": "A desk organizer made of three cardboard toilet paper rolls taped upright onto a flat piece of cardboard, holding colorful pens and pencils, placed on a tidy desk."
+    },
+    {
+      "id": "project_02",
+      "name": "Çekmece İçi Kablo Düzenleyici",
+      "description": "Kabloların birbirine dolanmasını engelleyen pratik bir düzenleyici.",
+      "required_materials": [
+        {
+          "material_id": "cardboard_box",
+          "quantity": 1,
+          "name": "Karton kutu"
+        },
+        {
+          "material_id": "cardboard_roll",
+          "quantity": 6,
+          "name": "Karton rulo"
+        }
+      ],
+      "required_supplies": [
+        "Bant"
+      ],
+      "optional_supplies": [],
+      "category": "organizasyon",
+      "difficulty": "kolay",
+      "estimated_minutes": 10,
+      "steps": [
+        "Karton kutunun çekmecenize sığdığından emin olun, sığmıyorsa kutunun kapaklarını içe doğru katlayarak boyutunu küçültün.",
+        "Karton ruloları dik bir şekilde kutunun içine yan yana dizin.",
+        "Ruloların devrilmemesi için birbirlerine temas eden noktalarından bantlayın.",
+        "Şarj aletlerini ve USB kablolarını nazikçe sarın.",
+        "Her bir rulonun içine bir kablo yerleştirerek çekmecenizi organize edin."
+      ],
+      "practical_use": "Şarj aletleri ve kabloları düzenli, birbirine karışmadan saklamak için kullanılır.",
+      "safety_warning": "Kabloları çok sıkı katlamak veya düğümlemek iç tellere zarar verip yangın riski oluşturabilir, gevşekçe sarın.",
+      "image_prompt": "A top-down view of a cardboard box inside a drawer, filled with vertical cardboard toilet paper rolls. Each roll neatly holds a loosely coiled charging cable, minimalist organization."
+    },
+    {
+      "id": "project_03",
+      "name": "Geri Dönüşüm XOX Oyunu",
+      "description": "Atık malzemelerden yapılan eğlenceli ve taşınabilir bir strateji oyunu.",
+      "required_materials": [
+        {
+          "material_id": "cardboard_box",
+          "quantity": 1,
+          "name": "Karton kutu"
+        },
+        {
+          "material_id": "plastic_cap",
+          "quantity": 10,
+          "name": "Plastik kapak"
+        }
+      ],
+      "required_supplies": [
+        "Kalem"
+      ],
+      "optional_supplies": [],
+      "category": "oyun",
+      "difficulty": "kolay",
+      "estimated_minutes": 5,
+      "steps": [
+        "Karton kutunun kapak kısmından düz bir parça ayırın veya kutuyu ezerek düzleştirin.",
+        "Kartonun üzerine kalemle 3x3 boyutunda bir oyun ızgarası çizin.",
+        "5 plastik kapağın iç kısmına 'X', diğer 5 kapağın iç kısmına 'O' çizin.",
+        "Kapakları taş olarak kullanarak oynamaya başlayın."
+      ],
+      "practical_use": "Evde veya seyahatte çocuklar ve yetişkinler için zeka geliştirici bir aktivite sunar.",
+      "safety_warning": "Kapakları boyarken kullanılan kalemin mürekkebi cilde veya eşyalara bulaşabilir, oyun sonrası ellerinizi yıkayın.",
+      "image_prompt": "A homemade Tic-Tac-Toe game using a flat piece of cardboard with a drawn grid. Colorful plastic bottle caps marked with X and O are placed on the squares."
+    },
+    {
+      "id": "project_05",
+      "name": "Karton Kapaklı Fotoğraf Çerçevesi",
+      "description": "Kişisel fotoğraflarınızı veya çizimlerinizi sergilemek için basit bir çerçeve.",
+      "required_materials": [
+        {
+          "material_id": "cardboard_box",
+          "quantity": 1,
+          "name": "Karton kutu"
+        },
+        {
+          "material_id": "clean_paper",
+          "quantity": 1,
+          "name": "Temiz kâğıt"
+        }
+      ],
+      "required_supplies": [
+        "Bant",
+        "Kalem"
+      ],
+      "optional_supplies": [
+        "Fotoğraf veya çizim"
+      ],
+      "category": "dekorasyon",
+      "difficulty": "kolay",
+      "estimated_minutes": 10,
+      "steps": [
+        "Karton kutunun kapaklarından birini katlama çizgisinden nazikçe kopararak dikdörtgen bir zemin elde edin.",
+        "Temiz kağıdı kartonun üzerine ortalayarak yerleştirin ve kenarlarından arkaya doğru katlayarak bantlayın.",
+        "Kağıdın kenarlarına kalemle bir çerçeve deseni çizin.",
+        "Çerçevenin ortasına bir fotoğrafınızı veya küçük bir çizimi bantlayın.",
+        "Kartonun arkasına rulo yaptığınız bir bant yapıştırarak duvara veya dolaba tutturun."
+      ],
+      "practical_use": "Boş duvarları veya panoları kişiselleştirmek için geri dönüştürülmüş dekorasyon sağlar.",
+      "safety_warning": "Duvara yapıştırırken kullanacağınız bandın duvar boyasını kaldırmaması için uygun kalitede bant kullanmaya dikkat edin.",
+      "image_prompt": "A rustic handmade photo frame made from a flat piece of cardboard wrapped in white paper, with drawn decorative borders, holding a small polaroid photo, taped to a wall."
+    },
+    {
+      "id": "project_06",
+      "name": "Anı ve Şükran Kavanozu",
+      "description": "Güzel anıları ve hedefleri biriktirebileceğiniz, motivasyon artırıcı bir araç.",
+      "required_materials": [
+        {
+          "material_id": "glass_jar",
+          "quantity": 1,
+          "name": "Cam kavanoz"
+        },
+        {
+          "material_id": "clean_paper",
+          "quantity": 2,
+          "name": "Temiz kâğıt"
+        }
+      ],
+      "required_supplies": [
+        "Kalem"
+      ],
+      "optional_supplies": [
+        "İp veya kurdele"
+      ],
+      "category": "dekorasyon",
+      "difficulty": "kolay",
+      "estimated_minutes": 5,
+      "steps": [
+        "Cam kavanozun içinin tamamen kuru ve temiz olduğundan emin olun.",
+        "Temiz kağıtları elinizle yavaşça yırtarak küçük kare parçalara ayırın.",
+        "Her bir kağıda o gün minnettar olduğunuz bir şeyi, güzel bir anıyı veya hedefinizi yazın.",
+        "Kağıtları ikiye katlayıp kavanozun içine atın.",
+        "Her gün veya haftada bir yeni kağıtlar ekleyerek kavanozu doldurun."
+      ],
+      "practical_use": "Kişisel gelişim ve farkındalık için moral verici, aynı zamanda rafta şık duran bir objedir.",
+      "safety_warning": "Cam kavanozun düşüp kırılması ciddi kesiklere yol açabilir, çocukların erişemeyeceği güvenli bir rafta muhafaza edin.",
+      "image_prompt": "A beautiful clear glass jar filled with folded pieces of clean paper containing written memories. The jar is sitting on a cozy nightstand next to a warm glowing lamp."
+    },
+    {
+      "id": "project_15",
+      "name": "Şişe Bowling Oyunu",
+      "description": "Koridorda veya bahçede oynanabilen kendi yaptığınız bowling seti.",
+      "required_materials": [
+        {
+          "material_id": "pet_bottle",
+          "quantity": 6,
+          "name": "PET şişe"
+        }
+      ],
+      "required_supplies": [
+        "Küçük top"
+      ],
+      "optional_supplies": [
+        "Su"
+      ],
+      "category": "oyun",
+      "difficulty": "çok kolay",
+      "estimated_minutes": 5,
+      "steps": [
+        "Boş PET şişelerin içini hafifçe yıkayıp kapaklarını kapatın.",
+        "Şişelerin devrilmesini zorlaştırmak isterseniz diplerine çok az miktarda su koyabilirsiniz.",
+        "Şişeleri koridorun sonuna üçgen oluşturacak şekilde (arkada 3, ortada 2, önde 1) dizin.",
+        "Birkaç metre geriye gidin.",
+        "Elinizdeki topu yerden yuvarlayarak en fazla sayıda şişeyi devirmeye çalışın."
+      ],
+      "practical_use": "Ev içinde fiziksel hareketliliği teşvik eden, enerjiyi atan güvenli bir spordur.",
+      "safety_warning": "Şişelerin içine su konulduysa kapaklarının sıkı kapandığından emin olun; ıslak zeminde kayıp düşme tehlikesi olabilir.",
+      "image_prompt": "Six empty clear PET plastic bottles arranged in a triangle formation on a living room floor like bowling pins. A colorful small ball is rolling towards them."
+    },
+    {
+      "id": "project_19",
+      "name": "Renk Eşleştirme Hafıza Oyunu",
+      "description": "Görsel hafızayı güçlendiren kendi tasarımınız olan eşleştirme kartları.",
+      "required_materials": [
+        {
+          "material_id": "plastic_cap",
+          "quantity": 10,
+          "name": "Plastik kapak"
+        },
+        {
+          "material_id": "clean_paper",
+          "quantity": 1,
+          "name": "Temiz kâğıt"
+        }
+      ],
+      "required_supplies": [
+        "Bant",
+        "Renkli kalemler"
+      ],
+      "optional_supplies": [],
+      "category": "oyun",
+      "difficulty": "kolay",
+      "estimated_minutes": 15,
+      "steps": [
+        "Temiz kağıdı, kapakların içine sığacak boyutta 10 küçük daire şeklinde koparın veya kesin.",
+        "Bu kağıtları 2'şerli eşler olacak şekilde 5 farklı renge boyayın (örneğin 2 kırmızı, 2 mavi).",
+        "Boyalı kağıtları kapakların iç yuvalarına bant yardımıyla sabitleyin.",
+        "Kapakları, içleri görünmeyecek şekilde kapalı olarak masaya dizin.",
+        "Sırayla ikişer kapak açarak aynı renkleri bulmaya çalışın."
+      ],
+      "practical_use": "Hafıza, odaklanma ve dikkat becerilerini geliştiren, yanınızda taşıyabileceğiniz bir akıl oyunudur.",
+      "safety_warning": "Plastik kapaklar küçük çocuklar veya bebekler için ağza alındığında ciddi bir yutma ve boğulma tehlikesi oluşturur, gözetimsiz bırakmayın.",
+      "image_prompt": "10 plastic bottle caps faced down on a table. A hand is lifting one cap to reveal a piece of white paper inside colored with a bright blue marker. Memory game concept."
+    },
+    {
+      "id": "project_20",
+      "name": "Karton Kutu Hedef Vurma Oyunu",
+      "description": "İçeri kaydırma mekaniğine dayalı motor becerilerini geliştiren refleks oyunu.",
+      "required_materials": [
+        {
+          "material_id": "cardboard_box",
+          "quantity": 1,
+          "name": "Karton kutu"
+        },
+        {
+          "material_id": "plastic_cap",
+          "quantity": 5,
+          "name": "Plastik kapak"
+        }
+      ],
+      "required_supplies": [],
+      "optional_supplies": [
+        "Kalem"
+      ],
+      "category": "oyun",
+      "difficulty": "çok kolay",
+      "estimated_minutes": 5,
+      "steps": [
+        "Karton kutuyu, ağzı size veya oyuncuya bakacak şekilde yan olarak zemine veya geniş bir masaya yatırın.",
+        "İsteğe bağlı olarak kutunun iç tabanına puan bölgeleri çizebilirsiniz.",
+        "Kutudan bir metre kadar geriye gidin.",
+        "Plastik kapakları zeminde kaydırarak hızla kutunun içine sokmaya ve en yüksek puanı toplamaya çalışın."
+      ],
+      "practical_use": "Evde güvenle oynanabilecek, eşyalara zarar verme ihtimali düşük bir el-göz koordinasyonu oyunudur.",
+      "safety_warning": "Kapakları sertçe fırlatmak etraftaki cam eşyalara çarpıp kırılmaya veya göze gelerek yaralanmaya yol açabilir, sadece zeminden kaydırarak oynayın.",
+      "image_prompt": "A sideways cardboard box on a wooden floor acting as a goal. Colorful plastic bottle caps are scattered on the floor, sliding towards the open box."
+    },
+    {
+      "id": "project_26",
+      "name": "Karton Dürbün Oyuncak",
+      "description": "Maceracı çocuklar için odaklanmayı eğlenceli hale getiren sahte dürbün.",
+      "required_materials": [
+        {
+          "material_id": "cardboard_roll",
+          "quantity": 2,
+          "name": "Karton rulo"
+        },
+        {
+          "material_id": "clean_paper",
+          "quantity": 1,
+          "name": "Temiz kâğıt"
+        }
+      ],
+      "required_supplies": [
+        "Bant"
+      ],
+      "optional_supplies": [
+        "Kalem"
+      ],
+      "category": "oyun",
+      "difficulty": "kolay",
+      "estimated_minutes": 10,
+      "steps": [
+        "İki karton ruloyu uzunlamasına yan yana getirin ve birbirine bantlayın.",
+        "Dürbünü daha sağlam ve şık yapmak için etrafına temiz kağıdı dolayarak bantla sabitleyin.",
+        "İsteğe bağlı olarak dış kağıt yüzeyine kamuflaj veya uzay desenleri çizin.",
+        "Gözlerinize tutup etrafı küçük bir vizörden keşfetmeye başlayın."
+      ],
+      "practical_use": "Hayal gücünü geliştiren korsanlık, kaşiflik veya doğa gözlemi oyunlarında kostüm aksesuarıdır.",
+      "safety_warning": "Dürbünle bakarak yürümek çevresel görüşü daralttığı için çarpma ve düşme tehlikesi yaratabilir, yürürken veya merdiven inip çıkarken kullanmayın.",
+      "image_prompt": "A handmade toy binocular crafted by taping two cardboard toilet paper rolls together, wrapped in paper with hand-drawn camouflage patterns."
+    },
+    {
+      "id": "project_28",
+      "name": "Çekmece İçi Kağıt Ayraçlı Kutu",
+      "description": "Faturaları, notları veya küçük kağıtları tasnif etmek için dosyalamalı kutu.",
+      "required_materials": [
+        {
+          "material_id": "cardboard_box",
+          "quantity": 1,
+          "name": "Karton kutu"
+        },
+        {
+          "material_id": "clean_paper",
+          "quantity": 2,
+          "name": "Temiz kâğıt"
+        }
+      ],
+      "required_supplies": [
+        "Bant"
+      ],
+      "optional_supplies": [],
+      "category": "organizasyon",
+      "difficulty": "orta",
+      "estimated_minutes": 15,
+      "steps": [
+        "Karton kutunun kapaklarını içe doğru katlayın.",
+        "Kağıtlardan birini kutunun iç tabanına temiz bir zemin olarak yerleştirin ve bantlayın.",
+        "Diğer kağıdı akordeon gibi zigzag şeklinde katlayın.",
+        "Bu zigzaglı kağıdı kutunun içine dik olarak yerleştirin ve uçlarını kutunun yanlarına bantlayın.",
+        "Oluşan her bir kıvrım arasına farklı faturaları, zarfları veya fişleri dosyalayın."
+      ],
+      "practical_use": "Masa üstündeki veya çekmecedeki karışık evrak yığınlarını düzenleyerek aranan belgenin bulunmasını kolaylaştırır.",
+      "safety_warning": "Kağıt kenarlarını katlarken ellerinizde derin olmayan fakat acıtan kağıt kesikleri oluşabilir, dikkatli katlayın.",
+      "image_prompt": "A small cardboard box acting as an inbox tray on a desk. Inside, a piece of white paper is folded like an accordion, separating different mail envelopes and receipts."
+    },
+    {
+      "id": "project_38",
+      "name": "Örgü İpi Kasesi",
+      "description": "Örgü örerken ip yumağının sağa sola yuvarlanmasını ve kirlenmesini önleyen sabit tutucu.",
+      "required_materials": [
+        {
+          "material_id": "yogurt_container",
+          "quantity": 1,
+          "name": "Yoğurt kabı"
+        }
+      ],
+      "required_supplies": [],
+      "optional_supplies": [
+        "Dışını süslemek için yapışkanlı kağıt"
+      ],
+      "category": "organizasyon",
+      "difficulty": "çok kolay",
+      "estimated_minutes": 2,
+      "steps": [
+        "Boş yoğurt kabını kalıntı kalmayacak şekilde yıkayın ve bir bezle tamamen kurulayın.",
+        "Ördüğünüz veya kullanacağınız ip yumağını kabın içine bütün olarak oturtun.",
+        "İpin ucunu kabın üst ağzından dışarı doğru sarkıtın.",
+        "Kabı yere veya koltuğun yanına koyarak ipi yavaşça çekip örgünüze devam edin."
+      ],
+      "practical_use": "Yumağın evin içinde dağılmasını, evcil hayvanların oynamasını ve tozlanmasını engeller.",
+      "safety_warning": "Yoğurt kabının ağız kenarlarında üretimden kaynaklanan keskin plastik çapaklar varsa ipin takılıp kopmasına veya elinizi çizmesine yol açabilir.",
+      "image_prompt": "A clean round plastic yogurt container sitting on a cozy rug, holding a large ball of red yarn. The yarn thread is being pulled up gently, preventing it from rolling away."
+    },
+    {
+      "id": "project_39",
+      "name": "Ritim Davulu",
+      "description": "Çocuklar için güvenli ve farklı yüzeylerden ses çıkaran el yapımı vurmalı çalgı.",
+      "required_materials": [
+        {
+          "material_id": "yogurt_container",
+          "quantity": 1,
+          "name": "Yoğurt kabı"
+        }
+      ],
+      "required_supplies": [
+        "Bant",
+        "2 adet kurşun kalem (baget olarak)"
+      ],
+      "optional_supplies": [
+        "Renkli bantlar veya çıkartmalar"
+      ],
+      "category": "oyun",
+      "difficulty": "çok kolay",
+      "estimated_minutes": 5,
+      "steps": [
+        "Yoğurt kabını temizleyip tamamen kurutun.",
+        "Kabın ağız kısmı zemine (aşağı) bakacak şekilde ters çevirin.",
+        "Kabın plastik dış yüzeyini dilediğiniz gibi renkli bantlar veya etiketlerle süsleyin.",
+        "El çırparak veya baget olarak kurşun kalemleri kullanarak kabın ters duran tabanına vurup ritim tutun."
+      ],
+      "practical_use": "Müzik sevgisini ve ritim duygusunu aşılayan, kırılma riski olmayan dayanıklı bir oyuncaktır.",
+      "safety_warning": "Kalemlerin sivri uçlarıyla çok sert vurulması plastik kabın delinebilmesine veya kıymıkların sıçramasına sebep olabilir, kalemlerin silgili uçlarıyla vurulmasını tavsiye edin.",
+      "image_prompt": "An upside-down white plastic yogurt container decorated with colorful tape stripes, being used as a toy drum by a child holding two pencils as drumsticks."
+    },
+    {
+      "id": "project_40",
+      "name": "Kendini Sulayan PET Saksı",
+      "description": "Pamuk fitille alt haznedeki suyu toprağa taşıyan, su seviyesi gözle kontrol edilebilen küçük bir saksı.",
+      "required_materials": [
+        {
+          "material_id": "pet_bottle",
+          "quantity": 1,
+          "name": "1,5–2 litrelik temiz PET şişe"
+        },
+        {
+          "material_id": "plastic_cap",
+          "quantity": 1,
+          "name": "Şişeye uyan vidalı plastik kapak"
+        }
+      ],
+      "required_supplies": [
+        "Kalın pamuk ip veya pamuk fitil (yaklaşık 25 cm)",
+        "Saksı toprağı ve küçük bir süs bitkisi",
+        "Su",
+        "Makas, cetvel, kalem ve kesilmeye dayanıklı çalışma altlığı",
+        "Kapak deliği için el matkabı ve yetişkin yardımı",
+        "Kesik kenarları kapatmak için dayanıklı bant"
+      ],
+      "optional_supplies": [
+        "Hazneyi ışık almaktan koruyacak çıkarılabilir kumaş kılıf"
+      ],
+      "category": "bitki yetiştirme",
+      "difficulty": "orta",
+      "estimated_minutes": 30,
+      "steps": [
+        "Şişeyi yıkayıp kurutun. Yetişkin, şişeyi sabit bir altlık üzerinde yaklaşık ortasından kessin; alt bölüm su haznesi, ters çevrilen üst bölüm saksı olacak.",
+        "İki kesik kenarın tamamını bantla kapatın. Yetişkin, kapağı şişeden çıkarıp sabitleyerek el matkabıyla fitilin sıkıca geçeceği bir delik açsın; çapakları temizlesin. Alev veya ısıtılmış alet kullanmayın.",
+        "Fitili kapaktan geçirin; bir ucu üst bölümün içindeki toprağa yaklaşık 10 cm uzansın, diğer ucu alt haznenin tabanına ulaşsın. Kapağı yerine vidalayın.",
+        "Üst bölümü ters çevirip alt bölüme oturtun. Fitilin üst ucunu toprağın içine yayarak toprak ve bitkiyi yerleştirin. İlk kurulumda toprağı hafifçe sulayın.",
+        "Alt hazneyi, kapak suya gömülmeyecek ve toprak suya değmeyecek seviyeye kadar doldurun. Fitilin alt ucu suya ulaşsın; taşma olup olmadığını kontrol edin.",
+        "İlk günlerde toprak nemini ve su seviyesini her gün kontrol edin. Toprak sürekli ıslaksa suyu azaltın. Hazneyi düzenli boşaltıp yıkayın, bitkiyi doğrudan yakıcı güneşten koruyun."
+      ],
+      "practical_use": "Küçük süs bitkilerinin sulama aralığını uzatmaya yardımcı olur; bakım ve nem kontrolünün yerini almaz.",
+      "safety_warning": "Kesme ve delme işlemlerini yalnızca yetişkin yapsın. PET plastiği ısıtmayın veya yakmayın. Saksıyı devrilmeyecek düz bir yerde tutun; haznedeki su içilmez. Bant açılırsa veya plastik çatlar ve kırılganlaşırsa kullanmayı bırakın.",
+      "image_prompt": "A realistic DIY wick watering planter made from one clear PET bottle cut in two, inverted upper half with a screw cap and cotton wick above a small water reservoir, a small ornamental plant, protected cut edges, no flame or hot tools."
+    },
+    {
+      "id": "project_41",
+      "name": "PET Şişeden Poşet Ağzı Kapatıcı",
+      "description": "Şişenin vidalı boynunu ve kapağını kullanarak esnek bir poşetin ağzını tekrar açılıp kapanabilir hale getirir.",
+      "required_materials": [
+        {
+          "material_id": "pet_bottle",
+          "quantity": 1,
+          "name": "Temiz ve kuru PET içecek şişesi"
+        },
+        {
+          "material_id": "plastic_cap",
+          "quantity": 1,
+          "name": "Şişeye uyan vidalı plastik kapak"
+        }
+      ],
+      "required_supplies": [
+        "Kapatılacak sağlam, esnek poşet",
+        "Makas, kalem ve kesilmeye dayanıklı çalışma altlığı",
+        "Kesik kenarlar için dayanıklı bant"
+      ],
+      "optional_supplies": [
+        "Poşet içeriği için etiket ve kalem"
+      ],
+      "category": "organizasyon",
+      "difficulty": "kolay",
+      "estimated_minutes": 15,
+      "steps": [
+        "Şişe ve kapağı yıkayıp tamamen kurutun. Şişe boynunun altında yaklaşık 2–3 cm omuz payı bırakarak kesim çizgisini işaretleyin.",
+        "Yetişkin, sabit altlık üzerinde işaretli yerden kessin. Sivri çıkıntı bırakmayın ve kesik çevrenin tamamını bantla kapatın; vidalı bölüme bant gelmesin.",
+        "Kapağı çıkarın. Poşetin boş ağız kısmını alttan şişe boynundan geçirip birkaç santimetre dışarı çekin.",
+        "Poşet ağzını boynun dışına doğru katlayın ve kapağı zorlamadan vidalayın. Kalınlık nedeniyle kapanmıyorsa daha ince ve sağlam bir poşet kullanın.",
+        "Kapatıcıyı çekerek kontrol edin. Poşeti ters çevirmeden saklayın; gerektiğinde kapağı açıp tekrar kapatın. Bant ve poşette yırtık olup olmadığını düzenli kontrol edin."
+      ],
+      "practical_use": "Kuru ev eşyası veya gıda dışı küçük parça poşetlerini tekrar kapatmak için kullanılır; hava veya sıvı sızdırmazlığı garanti etmez.",
+      "safety_warning": "Kesme işlemi yetişkin tarafından yapılmalı; sıcak alet veya alev kullanılmamalıdır. Küçük kapakları çocuklardan uzak tutun. Bu ev yapımı kapatıcıyı sıvı taşımak, kimyasal depolamak veya gıdayı uzun süre korumak için kullanmayın.",
+      "image_prompt": "A reusable bag closure using the threaded neck and matching screw cap of a PET bottle, a flexible bag pulled through the neck and folded over before capping, fully protected cut edge, clean tabletop demonstration."
+    },
+    {
+      "id": "project_42",
+      "name": "PET Şişeden Huni",
+      "description": "Şişenin üst bölümünü kullanarak kuru ve gıda dışı malzemeler için tekrar kullanılabilir bir aktarım hunisi yapar.",
+      "required_materials": [
+        {
+          "material_id": "pet_bottle",
+          "quantity": 1,
+          "name": "Temiz PET içecek şişesi"
+        }
+      ],
+      "required_supplies": [
+        "Makas, kalem ve kesilmeye dayanıklı çalışma altlığı",
+        "Kesik kenarı kapatmak için dayanıklı bant",
+        "Aktarılacak kuru, gıda dışı malzeme ve alıcı kap"
+      ],
+      "optional_supplies": [
+        "Huniyi asmak için geniş, çıkarılabilir saklama halkası"
+      ],
+      "category": "ev gereçleri",
+      "difficulty": "kolay",
+      "estimated_minutes": 15,
+      "steps": [
+        "Şişeyi yıkayıp kurutun. Kapağı çıkarın ve üst omuz bölümünün altında, ağızdan yaklaşık 10–12 cm aşağıda bir çizgi çizin.",
+        "Yetişkin, şişeyi sabit bir altlıkta tutarak çizgi boyunca kessin. Keskin çıkıntıları makasla düzeltin; alev, sıcak metal veya başka bir ısıyla şekillendirme yapmayın.",
+        "Geniş kesik ağzın çevresini dayanıklı bantla tamamen kapatın. Bant içeri doğru sarkıp akış yolunu daraltmasın.",
+        "Huniyi dar ağzı aşağı gelecek şekilde alıcı kabın ağzına oturtun ve elinizle sabitleyin. Önce az miktarda malzemeyle akışı deneyin.",
+        "Malzemeyi yavaşça aktarın. Kullanım sonrasında huniyi yıkayıp tamamen kurutun; bant gevşerse yenileyin, çatlak oluşursa huniyi değiştirin."
+      ],
+      "practical_use": "Örneğin kuru saksı kumu veya küçük el işi malzemelerini dar ağızlı kaplara aktarmaya yardımcı olur.",
+      "safety_warning": "Kesimi yalnızca yetişkin yapsın. PET plastiği ısıtmayın; alev veya kızdırılmış metal kullanmayın. Sıcak sıvı, yakıt, çözücü, tehlikeli kimyasal veya gıda aktarımında kullanmayın. Huniyi kendi başına dengede bırakmayın.",
+      "image_prompt": "A clean funnel made from the upper section of a PET bottle with the screw cap removed, a smooth taped wide cut rim, transferring dry craft granules into a small container, cold mechanical cutting only, no flame or heated metal."
+    },
+    {
+      "id": "project_43",
+      "name": "Yoğurt Kabından Asma Soğan ve Sarımsak Sepeti",
+      "description": "Havalandırma delikli, hafif yükler için üç noktadan asılan yeniden kullanılabilir küçük bir mutfak sepeti.",
+      "required_materials": [
+        {
+          "material_id": "yogurt_container",
+          "quantity": 1,
+          "name": "Yaklaşık 1 litrelik sağlam ve temiz yoğurt kabı"
+        }
+      ],
+      "required_supplies": [
+        "Üç eşit uzunlukta sağlam pamuk kordon (yaklaşık 60 cm)",
+        "Yüke uygun sağlam askı halkası ve sabit kanca",
+        "Yetişkinin kullanacağı el matkabı, makas ve çalışma altlığı",
+        "Az miktarda kuru, kabuklu soğan veya sarımsak"
+      ],
+      "optional_supplies": [
+        "Yüksekliği ayarlamak için ek askı halkası"
+      ],
+      "category": "organizasyon",
+      "difficulty": "orta",
+      "estimated_minutes": 25,
+      "steps": [
+        "Kabı yıkayıp tamamen kurutun. Çatlak veya kırılgan kap kullanmayın; kapağını çıkarın.",
+        "Yetişkin, kabı sabit tutarak yan yüzeyde birkaç sıra küçük havalandırma deliği açsın. Ağız kenarının yaklaşık 3 cm altında, çevreye eşit dağılmış üç ayrı askı deliği açsın. Deliği ısıtarak açmayın.",
+        "Deliklerdeki tüm çapakları temizleyin. Kordonları askı deliklerinden geçirip kabın iç tarafında kaymayacak büyük düğümlerle sabitleyin; plastik düğümü taşıyabilsin.",
+        "Üç kordonun üst uçlarını tek halkada birleştirip kabı dengeli asın. Önce boşken, ardından elinizle destekleyerek küçük bir yükle bağlantıları kontrol edin.",
+        "Yalnızca kuru, kabuklu ürünleri gevşekçe yerleştirin; toplam yükü yaklaşık 300 gramla sınırlayın. Güneş ve ocaktan uzak, serin, kuru ve havadar bir noktada asın.",
+        "Ürünleri ve askı deliklerini düzenli kontrol edin. Çürüme varsa ürünü ayırın; kap veya delik çevresi çatladıysa sepeti kullanmayın."
+      ],
+      "practical_use": "Az miktarda kuru soğan veya sarımsağı tezgâhtan kaldırarak havadar biçimde kısa süre saklar.",
+      "safety_warning": "Delme işlemi yalnızca yetişkine aittir. Askıyı insan veya hayvan geçişinin üzerine kurmayın; yük testini destekleyerek yapın. Uzun ipleri çocuk ve hayvanlardan uzak tutun. Soğan ve sarımsak kediler ve köpekler için zararlıdır; erişemeyecekleri yerde saklayın.",
+      "image_prompt": "A small white yogurt container with clean ventilation holes hanging evenly from three short cotton cords joined at a sturdy ring, holding a few dry garlic bulbs in a shaded ventilated kitchen, not over a walkway."
+    },
+    {
+      "id": "project_44",
+      "name": "Yoğurt Kabından Kumbara",
+      "description": "Kendi kapağı açılabilen yoğurt kabını bozuk paraları toplamak için tekrar kullanılabilir bir kumbaraya dönüştürür.",
+      "required_materials": [
+        {
+          "material_id": "yogurt_container",
+          "quantity": 1,
+          "name": "Sağlam, kendi kapağıyla birlikte temiz yoğurt kabı"
+        }
+      ],
+      "required_supplies": [
+        "Kalem ve cetvel",
+        "Yetişkinin kullanacağı makas, el matkabı ve kesilmeye dayanıklı altlık",
+        "Yuvanın kenarlarını korumak için dayanıklı bant"
+      ],
+      "optional_supplies": [
+        "Dış yüzey için etiket veya çıkartma"
+      ],
+      "category": "organizasyon",
+      "difficulty": "kolay",
+      "estimated_minutes": 20,
+      "steps": [
+        "Kabı ve kendi kapağını temizleyip kurutun. Kapağın sıkıca kapanıp yeniden açılabildiğini kontrol edin.",
+        "Kapağı kaptan çıkarın. Kullanacağınız en büyük paradan biraz uzun, yaklaşık 3,5 cm uzunluğunda ve 4 mm genişliğinde bir yuva işaretleyin.",
+        "Yetişkin, kapağı sabit bir altlığa yerleştirsin; el matkabıyla başlangıç deliği açıp makasla yuvayı dikkatlice kessin. Kapağı elde tutarak kesmeyin ve ısı kullanmayın.",
+        "Yuvanın tüm kenarlarını ince bant şeritleriyle kapatın; bant bozuk paranın yolunu tıkamasın. Paranın zorlanmadan geçtiğini yetişkin kontrol etsin.",
+        "Kapağı kapatın ve kabı isteğe göre etiketleyin. Parayı çıkarmak için kabı kesmek yerine kapağını açın.",
+        "Kabı ağırlaşana kadar doldurmayın; taban esniyorsa boşaltın. Bant, kapak veya plastik hasar gördüğünde kullanmayı bırakın."
+      ],
+      "practical_use": "Küçük birikimleri saymayı ve hedef belirlemeyi kolaylaştırır; kapağı açılarak defalarca boşaltılıp kullanılabilir.",
+      "safety_warning": "Kesme ve delme işlemlerini yalnızca yetişkin yapmalı. Paralar ve küçük parçalar yutma tehlikesi taşır; üç yaş altı çocuklardan uzak tutun ve daha büyük çocukları gözetin. Kumbara kilitli veya güvenli para saklama kutusu değildir.",
+      "image_prompt": "A reusable coin bank made from a yogurt container with its own removable lid, a narrow fully protected coin slot on top and a simple savings label, standing on a stable shelf, no cutting tools near children."
+    },
+    {
+      "id": "project_45",
+      "name": "Karton Kutudan Kedi Tırmalama Bloğu",
+      "description": "Oluklu karton şeritleri bir kutu çerçevesine sıkıştırarak yapıştırıcısız, değiştirilebilir bir tırmalama yüzeyi oluşturur.",
+      "required_materials": [
+        {
+          "material_id": "cardboard_box",
+          "quantity": 3,
+          "name": "Orta boy, kuru ve temiz oluklu karton kutu"
+        }
+      ],
+      "required_supplies": [
+        "Cetvel ve kalem",
+        "Yetişkinin kullanacağı makas veya maket bıçağı ile kesilmeye dayanıklı altlık"
+      ],
+      "optional_supplies": [
+        "Bloğun altına konacak tek parça kaymaz mat"
+      ],
+      "category": "evcil hayvan",
+      "difficulty": "orta",
+      "estimated_minutes": 45,
+      "steps": [
+        "Kutulardaki tüm zımba, ip, plastik pencere, etiket ve bantları çıkarın. Yağlı, küflü, parfümlü veya kimyasal taşımış karton kullanmayın.",
+        "Bir kutudan yaklaşık 30 × 20 cm tabanlı ve 4–5 cm yüksekliğinde sığ bir çerçeve hazırlayın. Yetişkin kesimleri altlık üzerinde yapsın; kalan sağlam kartonları da iç dolgu için ayırın.",
+        "Diğer iki kutuyu düzleştirin. Oluklu kenarlar üstte görünecek biçimde yaklaşık 4 cm yüksekliğinde ve çerçevenin iç eni kadar uzun şeritler kesin.",
+        "Şeritleri dik kenarları yukarı bakacak şekilde çerçeveye çok sıkı yan yana yerleştirin. Kutuların büyüklüğüne göre şerit sayısı değişir; yüzeyde boşluk kalmasın ve hiçbir şerit kolayca çekilip çıkmasın.",
+        "Yeterli karton yoksa eksik doldurmak yerine çerçeveyi küçültün. Dolguyu yapıştırıcı, tel, zımba, lastik veya ip kullanmadan sıkıştırarak sabitleyin.",
+        "Bloğu kaymayan düz bir zemine koyup kediyi ilk kullanımda gözetin. Her kullanımdan önce gevşek parçaları alın; yıpranan şeritleri aynı ölçüde yenileyin."
+      ],
+      "practical_use": "Kedinin yatay tırmalama davranışı için değiştirilebilir karton yüzey sunar; mobilya yerine kullanılabilecek bir seçenek oluşturur.",
+      "safety_warning": "Kesici aletleri yalnızca yetişkin kullansın. Kartonda açıkta bant, zımba, tel, ip veya yapıştırıcı bırakmayın. Kedi kartonu koparıp yutuyorsa, şeritler gevşiyorsa veya blok kayıyorsa hemen kaldırın; gözetimsiz çiğneme oyuncağı olarak bırakmayın.",
+      "image_prompt": "A sturdy horizontal cat scratcher made of tightly packed upright corrugated cardboard strips inside a low cardboard frame, exposed corrugated edges on top, completely free of staples strings tape and glue, on a nonslip floor."
+    },
+    {
+      "id": "project_46",
+      "name": "Karton Çekmece İçi Izgara Ayraç",
+      "description": "Birbirine geçmeli oluklu karton şeritlerle çekmeceye ölçülü, çıkarılabilir bölmeler ekler.",
+      "required_materials": [
+        {
+          "material_id": "cardboard_box",
+          "quantity": 1,
+          "name": "Şerit çıkarmaya yetecek büyüklükte temiz oluklu karton kutu"
+        }
+      ],
+      "required_supplies": [
+        "Cetvel, kalem ve makas",
+        "Yetişkinin kullanacağı kesilmeye dayanıklı çalışma altlığı"
+      ],
+      "optional_supplies": [
+        "Yıpranan kenarlar için kağıt bant"
+      ],
+      "category": "organizasyon",
+      "difficulty": "orta",
+      "estimated_minutes": 30,
+      "steps": [
+        "Çekmecenin iç enini, derinliğini ve yüksekliğini ölçün. Kutuyu düzleştirip bant ve zımbalarını çıkarın.",
+        "Çekmece yüksekliğinden yaklaşık 1 cm kısa yükseklikte şeritler işaretleyin. Örneğin bir yönde iki, diğer yönde iki şerit küçük bir ızgara oluşturur; her şerit kendi yönündeki iç ölçü kadar uzun olsun.",
+        "Yetişkin şeritleri altlık üzerinde kessin. Uzun şeritlerin kesişeceği yerleri ölçerek işaretleyin.",
+        "Bir yöndeki şeritlere üstten yarı yüksekliğe, diğer yöndekilere alttan yarı yüksekliğe kadar yuva kesin. Yuva genişliği karton kalınlığı kadar olsun.",
+        "Yuvaları birbirine geçirip ızgarayı çekmecenin içine oturtun. Geçişler sıkı olsun; zorlayıp yırtmak yerine yuvaları azar azar düzeltin.",
+        "Çekmeceyi boşken yavaşça açıp kapatarak takılma olmadığını kontrol edin. Hafif çorap, aksesuar veya kırtasiye yerleştirin; nemlenen parçaları yenileyin."
+      ],
+      "practical_use": "Hafif eşyaları ayırır; yapıştırılmadığı için çıkarılıp yeniden düzenlenebilir ve hasarlı şeritler değiştirilebilir.",
+      "safety_warning": "Kesme işini yetişkin yapsın. Karton yük taşıyan raf değildir; ağır veya keskin nesneleri dayamayın. Ayraç raylara ya da çekmece kapağına sıkışmamalı, ıslanan veya küflenen karton kullanılmamalıdır.",
+      "image_prompt": "A removable interlocking grid of corrugated cardboard dividers fitted neatly into a drawer, half-depth slots joining vertical strips without glue, organizing light socks and small stationery."
+    },
+    {
+      "id": "project_47",
+      "name": "Cam Kavanozdan Meyve Sineği Tuzağı",
+      "description": "Tekrar yıkanabilen bir kavanoz ve çıkarılabilir kağıt huniyle yetişkin meyve sineklerini yakalamaya yardımcı olur.",
+      "required_materials": [
+        {
+          "material_id": "glass_jar",
+          "quantity": 1,
+          "name": "Çatlağı olmayan temiz cam kavanoz"
+        },
+        {
+          "material_id": "clean_paper",
+          "quantity": 1,
+          "name": "Kağıt huni için temiz kağıt"
+        }
+      ],
+      "required_supplies": [
+        "Yaklaşık 50 ml elma sirkesi",
+        "1 damla bulaşık deterjanı",
+        "Kağıt huniyi birleştirmek için bant"
+      ],
+      "optional_supplies": [
+        "Dökülmeye karşı altlık ve tarih etiketi"
+      ],
+      "category": "ev gereçleri",
+      "difficulty": "kolay",
+      "estimated_minutes": 10,
+      "steps": [
+        "Kavanozu kontrol edin; çatlak veya çentik varsa kullanmayın. İçine yaklaşık 50 ml elma sirkesi ve yalnızca bir damla bulaşık deterjanı koyun, hafifçe çevirerek karıştırın.",
+        "Temiz kağıdı alt ucunda yaklaşık 3–4 mm açıklık kalan bir koni şeklinde sarın; yan birleşimini dıştan bantlayın.",
+        "Huniyi dar ucu kavanozun içine bakacak şekilde yerleştirin. Ucu sıvıya değmesin; geniş üst kenar kavanoz ağzını çevreden boşluk bırakmadan kapatsın.",
+        "Tuzağı devrilmeyecek bir altlık üzerinde, sinek görülen noktaya yakın fakat gıda hazırlama yüzeyinden ayrı bir yere koyun.",
+        "Her gün kontrol edin; karışımı 2–3 günde bir değiştirin. Kavanozu yıkayıp yeniden kullanın, ıslanan kağıt huniyi yenileyin.",
+        "Aynı zamanda çürüyen meyveleri uzaklaştırın, çöpü kapatın ve yiyecek artıklarını temizleyin. Tuzak tek başına üreme kaynağını ortadan kaldırmaz."
+      ],
+      "practical_use": "Evdeki yetişkin meyve sineklerini izlemeye ve azaltmaya yardımcı olur; temizlik ve kaynak kontrolüyle birlikte kullanılır.",
+      "safety_warning": "Karışım içilmez; çocukların ve evcil hayvanların erişemeyeceği yerde tutun. Sirkeyi çamaşır suyu veya başka temizlik kimyasallarıyla karıştırmayın. Camı kenara veya güneş altında ısınacak bir noktaya koymayın.",
+      "image_prompt": "A clear reusable glass jar containing a shallow layer of apple cider vinegar, topped with a paper cone whose narrow opening stays above the liquid, standing on a stable kitchen side tray away from food and children."
+    },
+    {
+      "id": "project_48",
+      "name": "Yumurta Kolisinden Mangala Oyunu",
+      "description": "On iki gözlü karton yumurta kolisi ve iki ayrı hazine kabıyla tekrar oynanabilir bir mangala tahtası oluşturur.",
+      "required_materials": [
+        {
+          "material_id": "egg_carton",
+          "quantity": 1,
+          "name": "Temiz, kuru, 12 gözlü karton yumurta kolisi"
+        },
+        {
+          "material_id": "yogurt_container",
+          "quantity": 2,
+          "name": "Hazine bölümleri için temiz küçük yoğurt kabı"
+        }
+      ],
+      "required_supplies": [
+        "48 adet kuru fasulye veya aynı boy küçük oyun taşı (yalnızca oyun için)",
+        "Kalem",
+        "Ellerin ve oyun yüzeyinin temizliği için su ve sabun"
+      ],
+      "optional_supplies": [
+        "İki oyuncunun aynı kuralları izlemesi için mangala kural kartı"
+      ],
+      "category": "oyun",
+      "difficulty": "kolay",
+      "estimated_minutes": 15,
+      "steps": [
+        "Yumurta akıntısı, leke, koku veya nem bulunmayan sağlam bir koli seçin; kirli koliyi yıkayarak kurtarmaya çalışmayın. Yoğurt kaplarını yıkayıp tamamen kurutun.",
+        "Koliyi açıp düz zemine koyun. İki sıradaki altışar gözü oyun kuyuları olarak kullanın; bir yoğurt kabını her kısa ucun yanına hazine olarak yerleştirin.",
+        "Her kuyuya dört oyun taşı koyarak toplam 48 taşı dağıtın. Her oyuncu kendine yakın altı kuyuyu ve sağındaki hazineyi kullansın.",
+        "Oyuncular başlangıçta aynı mangala kural setini seçsin; gerekirse kural kartını yanlarına koysun. Taşları kuyular arasında tek tek dağıtarak ve kendi hazinesinde biriktirerek sırayla oynayın.",
+        "Oyun sonunda hazinelerdeki taşları sayın. Taşları iki hazine kabında toplayın; koliyi kuru yerde saklayın ve her oyundan sonra ellerinizi yıkayın."
+      ],
+      "practical_use": "İki kişilik sayı sayma, planlama ve sıra bekleme etkinliği sağlar; oyun taşları ayrı kaplarda saklanarak tekrar kullanılabilir.",
+      "safety_warning": "Küçük taşlar ve fasulyeler boğulma tehlikesidir; üç yaş altına uygun değildir. Daha büyük çocuklar da yetişkin gözetiminde oynamalı; taşları ağza almamalıdır. Yumurtayla kirlenmiş veya küflü koliyi kullanmayın. Oyun için ayrılan fasulyeleri sonrasında yemeyin.",
+      "image_prompt": "A homemade mancala board using one clean twelve-cup cardboard egg carton with two rows of six wells, four dry beans per well and two small clean yogurt containers at the ends as stores, on a dry tabletop with adult supervision."
+    }
+  ]
+}

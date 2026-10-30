@@ -2,6 +2,8 @@ import asyncio
 import base64
 import io
 import json
+import hashlib
+from pathlib import Path
 
 import httpx
 import pytest
@@ -62,6 +64,47 @@ def test_all_ids(client, monkeypatch, material_id):
 def test_empty_detection_does_not_become_demo(client, monkeypatch):
     mock_result(monkeypatch, [])
     assert post(client).json() == {'materials': []}
+
+
+def test_yogurt_container_is_preserved_and_requested(client, monkeypatch):
+    mock_result(monkeypatch, [material(name='Yoğurt kabı', material_id='yogurt_container')])
+    response = post(client)
+    assert response.status_code == 200
+    assert response.json()['materials'][0]['material_id'] == 'yogurt_container'
+    assert response.json()['materials'][0]['requires_confirmation'] is True
+    assert 'yogurt_container=' in api.PROMPT
+    assert 'yogurt_container' in api.Material.model_json_schema()['properties']['material_id']['anyOf'][0]['enum']
+
+
+def test_real_recipe_catalog_ids_are_supported_by_backend():
+    path = Path(__file__).resolve().parents[2] / 'assets' / 'recipes' / 'projects.json'
+    catalog = json.loads(path.read_text(encoding='utf-8'))
+    assert len(catalog['approved_ids']) == len(set(catalog['approved_ids'])) == 21
+    assert len(catalog['projects']) == 21
+    assert {project['id'] for project in catalog['projects']} == set(catalog['approved_ids'])
+    recipe_ids = {material['material_id'] for project in catalog['projects'] for material in project['required_materials']}
+    assert recipe_ids <= api.MATERIAL_IDS
+    assert 'yogurt_container' in recipe_ids
+    assert 'egg_carton' in recipe_ids
+
+
+def test_original_twelve_recipes_remain_unchanged():
+    folder = Path(__file__).resolve().parent
+    originals = json.loads((folder / 'original_recipe_hashes.json').read_text(encoding='utf-8'))
+    catalog = json.loads((folder.parents[1] / 'assets/recipes/projects.json').read_text(encoding='utf-8'))
+    projects = {project['id']: project for project in catalog['projects']}
+    assert len(originals) == 12
+    for project_id, expected in originals.items():
+        serialized = json.dumps(projects[project_id], ensure_ascii=False, sort_keys=True, separators=(',', ':'))
+        assert hashlib.sha256(serialized.encode()).hexdigest() == expected
+
+
+def test_egg_carton_is_preserved_and_requested(client, monkeypatch):
+    mock_result(monkeypatch, [material(name='Karton yumurta kolisi', material_id='egg_carton')])
+    response = post(client)
+    assert response.status_code == 200
+    assert response.json()['materials'][0]['material_id'] == 'egg_carton'
+    assert 'egg_carton=' in api.PROMPT
 
 
 @pytest.mark.parametrize('change', [{'quantity': 0}, {'quantity': True}, {'quantity': '2'}, {'quantity': 1000}, {'name': ''}, {'confidence': 'high'}, {'requires_confirmation': 'true'}])
