@@ -21,7 +21,7 @@ void main() {
     );
     await tester.pumpAndSettle();
     debugDefaultTargetPlatformOverride = null;
-    expect(find.text('ReBorn AI'), findsOneWidget);
+    expect(find.text('Atıktan Artıya'), findsOneWidget);
     expect(find.text('Atığını Tara'), findsOneWidget);
     expect(find.byType(BottomSheet), findsNothing);
     expect(find.text('Galeriden seç'), findsWidgets);

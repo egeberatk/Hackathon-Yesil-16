@@ -4,7 +4,8 @@ import 'package:image_picker/image_picker.dart';
 
 import '../services/photo_service.dart';
 import '../core/app_theme.dart';
-import '../widgets/workshop_artwork.dart';
+import '../core/app_brand.dart';
+import '../widgets/eco_guide.dart';
 import '../widgets/page_body.dart';
 import '../widgets/recipe_library.dart';
 import 'photo_preview_screen.dart';
@@ -120,7 +121,7 @@ class _HomeScreenState extends State<HomeScreen> {
       const SizedBox(width: 10),
       Expanded(
         child: Text(
-          'ReBorn AI',
+          AppBrand.name,
           style: Theme.of(context).textTheme.titleLarge
               ?.copyWith(fontWeight: FontWeight.w800, letterSpacing: -.7),
         ),
@@ -166,20 +167,17 @@ class _HomeScreenState extends State<HomeScreen> {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               SizedBox(
-                height: (MediaQuery.sizeOf(context).width * .28).clamp(
-                  88.0,
-                  112.0,
-                ),
+                height:
+                    MediaQuery.sizeOf(context).width < 350 ||
+                        MediaQuery.textScalerOf(context).scale(12) > 16
+                    ? null
+                    : (MediaQuery.sizeOf(context).width * .28).clamp(
+                        88.0,
+                        112.0,
+                      ),
                 child: const ColoredBox(
                   color: Color(0xFFECF4E8),
-                  child: FittedBox(
-                    fit: BoxFit.contain,
-                    child: SizedBox(
-                      width: 320,
-                      height: 200,
-                      child: WorkshopArtwork(hero: true),
-                    ),
-                  ),
+                  child: EcoGuide(scene: EcoGuideScene.home, compact: true),
                 ),
               ),
               Padding(

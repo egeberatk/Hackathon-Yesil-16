@@ -1,3 +1,5 @@
+import 'helpers/mock_photo_platform.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -6,16 +8,20 @@ import 'package:hackathon_projesi/core/pet_guide_copy.dart';
 import 'package:hackathon_projesi/models/upcycling_project.dart';
 import 'package:hackathon_projesi/screens/pet_guide_complete_screen.dart';
 import 'package:hackathon_projesi/screens/pet_project_detail_screen.dart';
+import 'package:hackathon_projesi/screens/home_screen.dart';
 import 'package:hackathon_projesi/services/recipe_repository.dart';
 import 'package:hackathon_projesi/widgets/recipe_motion_player.dart';
 
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
+  setUp(mockPhotoPlatform);
   late UpcyclingProject planter;
+  late HomeTestAssets homeAssets;
   setUpAll(() async {
-    planter = RecipeRepository.parse(
-      await rootBundle.loadString(RecipeRepository.assetPath),
-    ).singleWhere((p) => p.id == 'project_40');
+    final source = await rootBundle.loadString(RecipeRepository.assetPath);
+    homeAssets = HomeTestAssets(source);
+    planter = RecipeRepository.parse(source)
+        .singleWhere((p) => p.id == 'project_40');
   });
 
   Future<void> app(
@@ -30,16 +36,19 @@ void main() {
     addTearDown(tester.view.resetDevicePixelRatio);
     addTearDown(tester.view.resetPhysicalSize);
     await tester.pumpWidget(
-      MaterialApp(
-        theme: AppTheme.light,
-        builder: (context, child) => MediaQuery(
-          data: MediaQuery.of(context).copyWith(
-            disableAnimations: reduced,
-            textScaler: TextScaler.linear(scale),
+      DefaultAssetBundle(
+        bundle: homeAssets,
+        child: MaterialApp(
+          theme: AppTheme.light,
+          builder: (context, child) => MediaQuery(
+            data: MediaQuery.of(context).copyWith(
+              disableAnimations: reduced,
+              textScaler: TextScaler.linear(scale),
+            ),
+            child: child!,
           ),
-          child: child!,
+          home: home,
         ),
-        home: home,
       ),
     );
     await tester.pump();
@@ -51,6 +60,7 @@ void main() {
     await tester.pump();
     await tester.tap(button);
     if (settle) {
+      await tester.runAsync(() => Future<void>.delayed(Duration.zero));
       await tester.pumpAndSettle();
     } else {
       await tester.pump();
@@ -144,14 +154,14 @@ void main() {
       expect(playerState.mounted, isFalse);
       await tester.pumpAndSettle();
       expect(find.byType(PetGuideCompleteScreen), findsOneWidget);
-      expect(find.text('Saksın hazır!'), findsOneWidget);
+      expect(find.text('Harika İş Çıkardın! 🌱'), findsOneWidget);
       expect(find.byType(RecipeMotionPlayer), findsNothing);
       expect(tester.binding.transientCallbackCount, 0);
       expect(tester.takeException(), isNull);
     },
   );
 
-  testWidgets('Return to recipes restores originating list, not another list', (
+  testWidgets('Return home clears the originating list and completed project', (
     tester,
   ) async {
     await app(tester, source());
@@ -160,8 +170,13 @@ void main() {
     await press(tester, const Key('start-building'));
     await lastStep(tester);
     await press(tester, const Key('next-step'));
-    await press(tester, const Key('return-to-recipes'));
-    expect(find.text('Tarif listesi — mevcut filtre'), findsOneWidget);
+    await press(tester, const Key('return-to-home'));
+    expect(find.text('Tarif listesi — mevcut filtre'), findsNothing);
+    expect(find.byType(HomeScreen), findsOneWidget);
+    expect(
+      Navigator.of(tester.element(find.byType(HomeScreen))).canPop(),
+      isFalse,
+    );
     expect(find.byType(PetProjectDetailScreen), findsNothing);
     expect(find.byType(PetGuideCompleteScreen), findsNothing);
     expect(find.byType(RecipeMotionPlayer), findsNothing);
@@ -169,7 +184,7 @@ void main() {
   });
 
   testWidgets(
-    'System back from completion returns to overview; restart starts step one',
+    'System back from completion returns home without a project underneath',
     (tester) async {
       await app(tester, source());
       await tester.tap(find.text('Tarif listesi — mevcut filtre'));
@@ -178,12 +193,20 @@ void main() {
       await lastStep(tester);
       await press(tester, const Key('next-step'));
       await tester.binding.handlePopRoute();
+      await tester.runAsync(() => Future<void>.delayed(Duration.zero));
       await tester.pumpAndSettle();
-      expect(find.byType(PetProjectDetailScreen), findsOneWidget);
+      expect(find.byType(HomeScreen), findsOneWidget);
+      expect(find.byType(PetProjectDetailScreen), findsNothing);
       expect(find.byType(RecipeMotionPlayer), findsNothing);
-      await press(tester, const Key('start-building'));
-      expect(find.text('Adım 1 / 6'), findsOneWidget);
-      expect(find.text(PetGuideCopy.step1), findsOneWidget);
+      expect(
+        Navigator.of(tester.element(find.byType(HomeScreen))).canPop(),
+        isFalse,
+      );
+      await tester.binding.handlePopRoute();
+      await tester.runAsync(() => Future<void>.delayed(Duration.zero));
+      await tester.pumpAndSettle();
+      expect(find.byType(PetGuideCompleteScreen), findsNothing);
+      expect(find.byType(PetProjectDetailScreen), findsNothing);
       expect(tester.takeException(), isNull);
     },
   );
@@ -203,8 +226,8 @@ void main() {
       );
       await lastStep(tester);
       await press(tester, const Key('next-step'));
-      expect(find.text('Saksın hazır!'), findsOneWidget);
-      final button = find.byKey(const Key('return-to-recipes'));
+      expect(find.text('Harika İş Çıkardın! 🌱'), findsOneWidget);
+      final button = find.byKey(const Key('return-to-home'));
       await tester.ensureVisible(button);
       await tester.pump();
       expect(button.hitTestable(), findsOneWidget);

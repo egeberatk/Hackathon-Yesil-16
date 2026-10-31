@@ -6,7 +6,6 @@ import '../models/upcycling_project.dart';
 import '../services/recipe_matching_service.dart';
 import '../widgets/recipe_detail_layout.dart';
 import '../widgets/recipe_icon_grid.dart';
-import '../widgets/recipe_library.dart';
 import '../widgets/recipe_project_preview.dart';
 import '../widgets/recipe_step_viewer.dart';
 import 'pet_project_detail_screen.dart';
@@ -29,29 +28,11 @@ class ProjectDetailScreen extends StatefulWidget {
 class _ProjectDetailScreenState extends State<ProjectDetailScreen> {
   void _openWorkshop() {
     final navigator = Navigator.of(context);
-    final detailRoute = ModalRoute.of(context);
     navigator.push(
       MaterialPageRoute<void>(
         builder: (_) => WorkshopRecipeGuide(
           project: widget.project,
           mediaBuilder: widget.stepMediaBuilder,
-          onReturnToRecipes: () {
-            if (detailRoute != null && detailRoute.isActive) {
-              navigator.popUntil((route) => route == detailRoute);
-              if (!detailRoute.isFirst) {
-                navigator.pop();
-                return;
-              }
-            }
-            navigator.pushReplacement(
-              MaterialPageRoute<void>(
-                builder: (_) => Scaffold(
-                  appBar: AppBar(title: const Text('Projeler')),
-                  body: const RecipeLibrary(showAll: true, scrollable: true),
-                ),
-              ),
-            );
-          },
         ),
       ),
     );

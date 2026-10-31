@@ -4,6 +4,7 @@ import '../core/app_theme.dart';
 import '../models/material_item.dart';
 import '../services/demo_data_service.dart';
 import '../widgets/flow_notice.dart';
+import '../widgets/eco_guide.dart';
 import '../widgets/material_card.dart';
 import '../widgets/material_editor.dart';
 import '../widgets/material_type_picker.dart';
@@ -159,14 +160,17 @@ class _MaterialConfirmationScreenState
             style: Theme.of(context).textTheme.headlineMedium,
           ),
           const SizedBox(height: 8),
-          Text(
-            widget.initialItems == null
-                ? 'Örnek liste. Malzemelerini kontrol et.'
-                : _items.isEmpty
-                ? 'Eksik malzemelerini ekleyebilirsin.'
-                : 'Fotoğrafta bunları bulduk. Doğru mu?',
-            style: Theme.of(context).textTheme.bodyMedium
-                ?.copyWith(color: AppTheme.muted),
+          if (widget.initialItems == null)
+            Text(
+              'Örnek liste. Malzemelerini kontrol et.',
+              style: Theme.of(context).textTheme.bodySmall,
+            ),
+          EcoGuide(
+            scene: _items.any((item) => item.type == WasteType.unknown)
+                ? EcoGuideScene.caution
+                : _items.isEmpty && widget.candidateExplanation != null
+                ? EcoGuideScene.noMaterials
+                : EcoGuideScene.materials,
           ),
           const SizedBox(height: 24),
           if (_items.isEmpty)

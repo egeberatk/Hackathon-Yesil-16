@@ -77,6 +77,7 @@ flutter:
     - assets/recipes/projects.json
     - assets/recipe_photos/
     - assets/recipes/photos/
+    - assets/mascot/mascot_cutout.png
 
   # To add assets to your application, add an assets section, like this:
   # assets:

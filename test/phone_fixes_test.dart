@@ -1,3 +1,5 @@
+import 'helpers/mock_photo_platform.dart';
+
 import 'dart:convert';
 import 'dart:io';
 
@@ -14,6 +16,7 @@ import 'package:hackathon_projesi/models/upcycling_project.dart';
 import 'package:hackathon_projesi/screens/photo_preview_screen.dart';
 import 'package:hackathon_projesi/screens/material_confirmation_screen.dart';
 import 'package:hackathon_projesi/screens/project_detail_screen.dart';
+import 'package:hackathon_projesi/screens/home_screen.dart';
 import 'package:hackathon_projesi/services/analysis_service.dart';
 import 'package:hackathon_projesi/services/material_candidate_filter.dart';
 import 'package:hackathon_projesi/services/recipe_repository.dart';
@@ -56,6 +59,7 @@ class _Analysis extends AnalysisService {
 
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
+  setUp(mockPhotoPlatform);
   late String source;
   late List<UpcyclingProject> catalog;
   late Uint8List pixel;
@@ -287,10 +291,11 @@ void main() {
     final player = tester.state(find.byType(RecipeMotionPlayer));
     await press(tester, find.byKey(const Key('next-step')));
     expect(player.mounted, isFalse);
-    expect(find.text('Projen hazır!'), findsOneWidget);
+    expect(find.text('Harika İş Çıkardın! 🌱'), findsOneWidget);
     await tester.binding.handlePopRoute();
     await tester.pumpAndSettle();
-    expect(find.byType(ProjectDetailScreen), findsOneWidget);
+    expect(find.byType(HomeScreen), findsOneWidget);
+    expect(find.byType(ProjectDetailScreen), findsNothing);
   });
 
   Map<String, dynamic> photoRecord() => {
@@ -386,7 +391,7 @@ void main() {
           await press(tester, find.byKey(const Key('next-step')));
           expect(tester.takeException(), isNull);
         }
-        expect(find.text('Projen hazır!'), findsOneWidget);
+        expect(find.text('Harika İş Çıkardın! 🌱'), findsOneWidget);
       },
     );
   }

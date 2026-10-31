@@ -6,7 +6,6 @@ import '../services/recipe_matching_service.dart';
 import '../widgets/page_body.dart';
 import '../widgets/recipe_icon_grid.dart';
 import '../widgets/recipe_step_viewer.dart';
-import '../widgets/recipe_library.dart';
 import '../widgets/recipe_detail_layout.dart';
 import '../widgets/workshop_vector_icon.dart';
 import 'pet_guide_complete_screen.dart';
@@ -65,29 +64,6 @@ List<RecipeVisualItem> _petSupplies(UpcyclingProject project) {
   return items;
 }
 
-void _openRecipes(NavigatorState navigator) {
-  navigator.pushReplacement(
-    MaterialPageRoute<void>(
-      builder: (_) => Scaffold(
-        appBar: AppBar(title: const Text('Projeler')),
-        body: const RecipeLibrary(showAll: true, scrollable: true),
-      ),
-    ),
-  );
-}
-
-void _returnToRecipes(BuildContext context, Route<dynamic>? detailRoute) {
-  final navigator = Navigator.of(context);
-  if (detailRoute != null && detailRoute.isActive) {
-    navigator.popUntil((route) => route == detailRoute);
-    if (!detailRoute.isFirst) {
-      navigator.pop();
-      return;
-    }
-  }
-  _openRecipes(navigator);
-}
-
 /// PET presentation adapters retain the approved copy and guide navigation.
 class PetProjectDetailScreen extends StatelessWidget {
   const PetProjectDetailScreen({
@@ -141,8 +117,6 @@ class PetProjectDetailScreen extends StatelessWidget {
         builder: (_) => PetRecipeGuide(
           project: project,
           stepMediaBuilder: stepMediaBuilder,
-          onReturnToRecipes: () =>
-              _returnToRecipes(context, ModalRoute.of(context)),
         ),
       ),
     ),
@@ -155,11 +129,9 @@ class PetRecipeGuide extends StatefulWidget {
     super.key,
     required this.project,
     this.stepMediaBuilder,
-    this.onReturnToRecipes,
   });
   final UpcyclingProject project;
   final RecipeStepMediaBuilder? stepMediaBuilder;
-  final VoidCallback? onReturnToRecipes;
   @override
   State<PetRecipeGuide> createState() => _PetRecipeGuideState();
 }
@@ -171,15 +143,13 @@ class _PetRecipeGuideState extends State<PetRecipeGuide> {
   void _finish() {
     if (_finishing) return;
     final navigator = Navigator.of(context);
-    final onReturn = widget.onReturnToRecipes ?? () => _openRecipes(navigator);
     // Remove the viewer first so its controller is disposed before navigation.
     setState(() => _finishing = true);
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (!mounted) return;
-      navigator.pushReplacement(
-        MaterialPageRoute<void>(
-          builder: (_) => PetGuideCompleteScreen(onReturnToRecipes: onReturn),
-        ),
+      navigator.pushAndRemoveUntil(
+        MaterialPageRoute<void>(builder: (_) => const PetGuideCompleteScreen()),
+        (_) => false,
       );
     });
   }

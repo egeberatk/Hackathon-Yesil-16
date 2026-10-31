@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
 
-import '../core/app_theme.dart';
 import '../models/material_item.dart';
 import '../services/analysis_service.dart';
 import '../services/photo_service.dart';
 import '../services/recipe_repository.dart';
 import '../services/material_candidate_filter.dart';
 import '../widgets/analysis_photo.dart';
+import '../widgets/eco_guide.dart';
 import '../widgets/flow_notice.dart';
 import '../widgets/page_body.dart';
 import '../widgets/recipe_badge.dart';
@@ -170,12 +170,12 @@ class _PhotoPreviewScreenState extends State<PhotoPreviewScreen> {
               style: Theme.of(context).textTheme.headlineMedium,
             ),
             const SizedBox(height: 8),
-            Text(
-              _analyzing
-                  ? 'Fotoğrafın ekranda kalsın; malzemelerini birlikte keşfediyoruz.'
-                  : 'Malzemelerin net göründüğünden emin ol. Dilersen fotoğrafı değiştirebilirsin.',
-              style: Theme.of(context).textTheme.bodyMedium
-                  ?.copyWith(color: AppTheme.muted),
+            EcoGuide(
+              scene: _analyzing
+                  ? EcoGuideScene.analyzing
+                  : _error != null
+                  ? EcoGuideScene.analysisError
+                  : EcoGuideScene.photo,
             ),
             const SizedBox(height: 24),
             FutureBuilder<Uint8List>(

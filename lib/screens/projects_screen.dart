@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
-import '../core/app_theme.dart';
 import '../models/material_item.dart';
 import '../services/recipe_repository.dart';
 import '../widgets/recipe_library.dart';
 import '../widgets/recipe_badge.dart';
+import '../widgets/eco_guide.dart';
 
 class ProjectsScreen extends StatelessWidget {
   const ProjectsScreen({super.key, required this.items, this.repository});
@@ -33,11 +33,7 @@ class ProjectsScreen extends StatelessWidget {
             style: Theme.of(context).textTheme.headlineMedium,
           ),
           const SizedBox(height: 8),
-          Text(
-            'Onayladığın malzemelerle başlayabileceğin fikirler. Eksik olanları da açıkça görebilirsin.',
-            style: Theme.of(context).textTheme.bodyMedium
-                ?.copyWith(color: AppTheme.muted),
-          ),
+          const EcoGuide(scene: EcoGuideScene.recommendations),
           const SizedBox(height: 16),
           Wrap(
             spacing: 8,

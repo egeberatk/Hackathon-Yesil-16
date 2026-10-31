@@ -1,3 +1,5 @@
+import 'helpers/mock_photo_platform.dart';
+
 import 'dart:io';
 import 'dart:convert';
 
@@ -43,6 +45,7 @@ class _Photos extends PhotoService {
 
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
+  setUp(mockPhotoPlatform);
   const ids = [
     'project_45',
     'project_46',
@@ -235,7 +238,7 @@ void main() {
 
   for (final id in ids) {
     testWidgets(
-      '$id opens from Home / Projects, traverses real steps and finishes back to list',
+      '$id opens from Home / Projects, traverses real steps and finishes at a fresh home',
       (tester) async {
         final p = recipe(id);
         final boundary = GlobalKey();
@@ -309,9 +312,9 @@ void main() {
         await press(tester, find.byKey(const Key('next-step')));
         expect(find.text('Bitir'), findsOneWidget);
         await press(tester, find.byKey(const Key('next-step')));
-        expect(find.text('Projen hazır!'), findsOneWidget);
+        expect(find.text('Harika İş Çıkardın! 🌱'), findsOneWidget);
         expect(find.byType(RecipeMotionPlayer), findsNothing);
-        await press(tester, find.byKey(const Key('return-to-recipes')));
+        await press(tester, find.byKey(const Key('return-to-home')));
         expect(find.byType(HomeScreen), findsOneWidget);
         expect(find.byType(ProjectCard), findsWidgets);
         expect(find.byType(ProjectDetailScreen), findsNothing);
@@ -387,7 +390,7 @@ void main() {
       expect(lastPlayer.mounted, isFalse);
       await tester.pumpAndSettle();
       expect(find.byType(WorkshopCompleteScreen), findsOneWidget);
-      expect(find.text('Projen hazır!'), findsOneWidget);
+      expect(find.text('Harika İş Çıkardın! 🌱'), findsOneWidget);
       expect(tester.binding.transientCallbackCount, 0);
       expect(tester.takeException(), isNull);
     },
@@ -428,10 +431,8 @@ void main() {
             expect(tester.takeException(), isNull);
             await press(tester, find.byKey(const Key('next-step')));
           }
-          expect(find.text('Projen hazır!'), findsOneWidget);
-          await tester.ensureVisible(
-            find.byKey(const Key('return-to-recipes')),
-          );
+          expect(find.text('Harika İş Çıkardın! 🌱'), findsOneWidget);
+          await tester.ensureVisible(find.byKey(const Key('return-to-home')));
           expect(tester.takeException(), isNull);
           await tester.pumpWidget(const SizedBox());
         }
