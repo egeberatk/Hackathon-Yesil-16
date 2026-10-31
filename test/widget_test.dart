@@ -23,10 +23,7 @@ void main() {
     debugDefaultTargetPlatformOverride = null;
     expect(find.text('ReBorn AI'), findsOneWidget);
     expect(find.text('Atığını Tara'), findsOneWidget);
-    await tester.ensureVisible(find.text('Atığını Tara'));
-    await tester.tap(find.text('Atığını Tara'));
-    await tester.pumpAndSettle();
-    expect(find.text('Fotoğraf çek'), findsOneWidget);
+    expect(find.byType(BottomSheet), findsNothing);
     expect(find.text('Galeriden seç'), findsWidgets);
     expect(tester.takeException(), isNull);
   });
@@ -52,19 +49,21 @@ void main() {
     await tester.tap(find.text('Kaydet'));
     await tester.pumpAndSettle();
     expect(find.text('3 adet'), findsOneWidget);
-    await tester.ensureVisible(find.text('Malzeme ekle'));
-    await tester.tap(find.text('Malzeme ekle'));
+    await tester.ensureVisible(find.text('Malzeme Ekle'));
+    await tester.tap(find.text('Malzeme Ekle'));
     await tester.pumpAndSettle();
-    await tester.ensureVisible(find.text('Kaydet'));
-    await tester.tap(find.text('Kaydet'));
+    await tester.ensureVisible(
+      find.byKey(const ValueKey('pick-material-cardboard_box')),
+    );
+    await tester.tap(find.byKey(const ValueKey('pick-material-cardboard_box')));
     await tester.pumpAndSettle();
     expect(find.byTooltip('Malzemeyi sil'), findsNWidgets(3));
     await tester.ensureVisible(find.byTooltip('Malzemeyi sil').last);
     await tester.tap(find.byTooltip('Malzemeyi sil').last);
     await tester.pumpAndSettle();
     expect(find.byTooltip('Malzemeyi sil'), findsNWidgets(2));
-    await tester.ensureVisible(find.text('Tarifleri Bul'));
-    await tester.tap(find.text('Tarifleri Bul'));
+    await tester.ensureVisible(find.text('Projeleri Keşfet'));
+    await tester.tap(find.text('Projeleri Keşfet'));
     await tester.pump();
     await tester.pumpAndSettle();
     expect(find.text('Dönüşüm fikirleri'), findsOneWidget);

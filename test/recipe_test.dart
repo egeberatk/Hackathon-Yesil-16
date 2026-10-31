@@ -7,6 +7,7 @@ import 'package:hackathon_projesi/models/upcycling_project.dart';
 import 'package:hackathon_projesi/screens/projects_screen.dart';
 import 'package:hackathon_projesi/services/recipe_matching_service.dart';
 import 'package:hackathon_projesi/services/recipe_repository.dart';
+import 'package:hackathon_projesi/widgets/recipe_icon_grid.dart';
 
 // Test verileri onaylı tariflerin gerçek içeriklerini temsil etmez ve asset'e eklenmez.
 Map<String, dynamic> record(String id, List<Map<String, dynamic>> materials) =>
@@ -211,13 +212,35 @@ void main() {
     await tester.pumpAndSettle();
     await tester.tap(find.text('Test tarifi missing'));
     await tester.pumpAndSettle();
-    await tester.scrollUntilVisible(find.text('Yardımcı malzemeler'), 300);
-    expect(find.text('•  Test bandı'), findsOneWidget);
-    expect(find.text('•  Test boyası'), findsOneWidget);
-    await tester.scrollUntilVisible(find.text('Güvenlik uyarısı'), 300);
-    expect(find.text('Yalnızca test adımı'), findsOneWidget);
+    final tiles = tester.widgetList<RecipeIconTile>(
+      find.descendant(
+        of: find.byKey(const Key('required-supply-icons')),
+        matching: find.byType(RecipeIconTile),
+      ),
+    );
+    expect(tiles.any((tile) => tile.item.name.contains('Test bandı')), isTrue);
+    final optional = tester.widgetList<RecipeIconTile>(
+      find.descendant(
+        of: find.byKey(const Key('optional-supply-icons')),
+        matching: find.byType(RecipeIconTile),
+      ),
+    );
+    expect(
+      optional.any((tile) => tile.item.name.contains('Test boyası')),
+      isTrue,
+    );
+    await tester.ensureVisible(find.byKey(const Key('recipe-extra-info')));
+    await tester.tap(find.byKey(const Key('recipe-extra-info')));
+    await tester.pumpAndSettle();
     expect(find.text('Yalnızca test amacı'), findsOneWidget);
+    await tester.tap(find.byTooltip('Güvenlik uyarısı'));
+    await tester.pumpAndSettle();
     expect(find.text('Yalnızca test uyarısı'), findsOneWidget);
+    await tester.tap(find.text('Kapat'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(const Key('start-building')));
+    await tester.pumpAndSettle();
+    expect(find.text('Yalnızca test adımı'), findsOneWidget);
     expect(tester.takeException(), isNull);
   });
 

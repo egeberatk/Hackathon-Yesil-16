@@ -57,8 +57,44 @@ def test_analyze_and_unknown_preservation(client, monkeypatch):
 
 @pytest.mark.parametrize('material_id', sorted(api.MATERIAL_IDS))
 def test_all_ids(client, monkeypatch, material_id):
-    mock_result(monkeypatch, [material(material_id=material_id.upper())])
+    mock_result(monkeypatch, [material(name='Kâğıt bardak' if material_id == 'paper_cup' else 'Plastik su şişesi', material_id=material_id.upper())])
     assert post(client).json()['materials'][0]['material_id'] == material_id
+
+
+@pytest.mark.parametrize('case', json.loads((Path(__file__).resolve().parents[2] / 'test/fixtures/material_label_cases.json').read_text(encoding='utf-8')))
+def test_shared_material_labels(case):
+    from backend.material_normalization import is_electronic, is_paper_cup
+    assert is_paper_cup(case['name']) == case['paper']
+    assert is_electronic(case['name']) == case['electronic']
+
+
+def test_headphones_and_paper_cup_preserve_detections(client, monkeypatch):
+    mock_result(monkeypatch, [material(name='Kulaklık', material_id='plastic_packaging'), material(name='Karton kahve bardağı', material_id='cardboard_roll')])
+    result = post(client).json()['materials']
+    assert len(result) == 2
+    assert result[0]['name'] == 'Kulaklık'
+    assert result[0]['material_id'] is None
+    assert result[1]['material_id'] == 'paper_cup'
+    assert result[1]['requires_confirmation'] is True
+
+
+@pytest.mark.parametrize('name', ['Plastik bardak', 'Cam bardağı'])
+def test_nonpaper_cup_cannot_be_a_roll_or_paper(name):
+    for material_id in ['paper_cup', 'clean_paper', 'cardboard_roll']:
+        result = api.normalize_analysis(json.dumps({'materials': [material(name=name, material_id=material_id)]})).materials[0]
+        assert result.material_id is None
+        assert result.requires_confirmation is True
+
+
+def test_retained_recipe_records_unchanged():
+    root = Path(__file__).resolve().parents[2]
+    expected = json.loads((root / 'test/fixtures/retained_recipe_hashes.json').read_text())
+    catalog = json.loads((root / 'assets/recipes/projects.json').read_text(encoding='utf-8'))
+    records = {p['id']: p for p in catalog['projects']}
+    assert len(expected) == 17
+    for recipe_id, digest in expected.items():
+        encoded = json.dumps(records[recipe_id], ensure_ascii=False, sort_keys=True, separators=(',', ':')).encode()
+        assert hashlib.sha256(encoded).hexdigest() == digest
 
 
 def test_empty_detection_does_not_become_demo(client, monkeypatch):
@@ -79,8 +115,8 @@ def test_yogurt_container_is_preserved_and_requested(client, monkeypatch):
 def test_real_recipe_catalog_ids_are_supported_by_backend():
     path = Path(__file__).resolve().parents[2] / 'assets' / 'recipes' / 'projects.json'
     catalog = json.loads(path.read_text(encoding='utf-8'))
-    assert len(catalog['approved_ids']) == len(set(catalog['approved_ids'])) == 21
-    assert len(catalog['projects']) == 21
+    assert len(catalog['approved_ids']) == len(set(catalog['approved_ids'])) == 17
+    assert len(catalog['projects']) == 17
     assert {project['id'] for project in catalog['projects']} == set(catalog['approved_ids'])
     recipe_ids = {material['material_id'] for project in catalog['projects'] for material in project['required_materials']}
     assert recipe_ids <= api.MATERIAL_IDS
@@ -88,12 +124,12 @@ def test_real_recipe_catalog_ids_are_supported_by_backend():
     assert 'egg_carton' in recipe_ids
 
 
-def test_original_twelve_recipes_remain_unchanged():
+def test_retained_original_recipes_remain_unchanged():
     folder = Path(__file__).resolve().parent
     originals = json.loads((folder / 'original_recipe_hashes.json').read_text(encoding='utf-8'))
     catalog = json.loads((folder.parents[1] / 'assets/recipes/projects.json').read_text(encoding='utf-8'))
     projects = {project['id']: project for project in catalog['projects']}
-    assert len(originals) == 12
+    assert len(originals) == 7
     for project_id, expected in originals.items():
         serialized = json.dumps(projects[project_id], ensure_ascii=False, sort_keys=True, separators=(',', ':'))
         assert hashlib.sha256(serialized.encode()).hexdigest() == expected

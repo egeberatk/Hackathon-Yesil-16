@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import 'package:hackathon_projesi/core/guide_language.dart';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -14,18 +16,15 @@ import 'package:hackathon_projesi/services/analysis_service.dart';
 import 'package:hackathon_projesi/services/recipe_matching_service.dart';
 import 'package:hackathon_projesi/services/recipe_repository.dart';
 import 'package:hackathon_projesi/widgets/project_card.dart';
+import 'package:hackathon_projesi/widgets/recipe_icon_grid.dart';
 
 const approvedIds = {
+  'project_49',
   'project_01',
-  'project_02',
   'project_03',
-  'project_05',
-  'project_06',
   'project_15',
   'project_19',
-  'project_20',
   'project_26',
-  'project_28',
   'project_38',
   'project_39',
   'project_40',
@@ -62,12 +61,12 @@ void main() {
     catalog = await RecipeRepository(bundle: CatalogBundle(source)).load();
   });
 
-  test('Gerçek asset tam 21 onaylı kaydı tüm alanlarıyla yükler', () {
+  test('Gerçek asset tam 17 onaylı kaydı tüm alanlarıyla yükler', () {
     final json = jsonDecode(source) as Map<String, dynamic>;
-    expect(json['approved_ids'], hasLength(21));
+    expect(json['approved_ids'], hasLength(17));
     expect((json['approved_ids'] as List).toSet(), approvedIds);
-    expect(json['projects'], hasLength(21));
-    expect(catalog, hasLength(21));
+    expect(json['projects'], hasLength(17));
+    expect(catalog, hasLength(17));
     expect(catalog.map((project) => project.id).toSet(), approvedIds);
     for (final project in catalog) {
       expect(project.name, isNotEmpty);
@@ -238,52 +237,47 @@ void main() {
             .where((m) => originalIds.contains(m.project.id))
             .map((m) => m.project.id),
         [
-          'project_05',
-          'project_20',
           'project_26',
           'project_01',
-          'project_28',
           'project_38',
           'project_39',
           'project_03',
           'project_15',
           'project_19',
-          'project_02',
-          'project_06',
         ],
       );
       expect(
         matches
             .where((m) => originalIds.contains(m.project.id))
-            .take(3)
+            .take(1)
             .every((m) => m.canMake),
         isTrue,
       );
       expect(
         matches
-            .singleWhere((m) => m.project.id == 'project_02')
+            .singleWhere((m) => m.project.id == 'project_01')
             .missingMaterials
             .single
             .quantity,
-        4,
+        1,
       );
-      final jar = matches.singleWhere((m) => m.project.id == 'project_06');
+      final mancala = matches.singleWhere((m) => m.project.id == 'project_48');
       expect(
         {
-          for (final item in jar.missingMaterials)
+          for (final item in mancala.missingMaterials)
             item.materialId: item.quantity,
         },
-        {'glass_jar': 1, 'clean_paper': 1},
+        {'egg_carton': 1, 'yogurt_container': 2},
       );
-      expect(jar.totalMissing, 2);
+      expect(mancala.totalMissing, 3);
     },
   );
 
   test(
-    'Gerçek katalogda boş envanter tüm 21 yakın tarifi ve eksikleri korur',
+    'Gerçek katalogda boş envanter tüm 17 yakın tarifi ve eksikleri korur',
     () {
       final matches = RecipeMatchingService.match(catalog, []);
-      expect(matches, hasLength(21));
+      expect(matches, hasLength(17));
       expect(matches.every((m) => !m.canMake), isTrue);
       expect(
         matches
@@ -293,13 +287,8 @@ void main() {
           'project_38',
           'project_39',
           'project_15',
-          'project_05',
-          'project_06',
           'project_26',
-          'project_28',
           'project_01',
-          'project_20',
-          'project_02',
           'project_03',
           'project_19',
         ],
@@ -308,7 +297,7 @@ void main() {
   );
 
   testWidgets(
-    'Gerçek katalog: fotoğraf analizi → onay → 21 tarif → Örgü İpi Kasesi detayı',
+    'Gerçek katalog: fotoğraf analizi → onay → 17 tarif → Örgü İpi Kasesi detayı',
     (tester) async {
       final service = AnalysisService(
         baseUrl: 'https://backend.test',
@@ -357,11 +346,11 @@ void main() {
       await tester.pumpAndSettle();
       await tester.tap(find.text('Analiz Et'));
       await tester.pumpAndSettle();
-      expect(find.text('Malzemelerini onayla'), findsOneWidget);
+      expect(find.text('Malzemelerini Doğrula'), findsOneWidget);
       expect(
         tester
             .widget<FilledButton>(
-              find.widgetWithText(FilledButton, 'Tarifleri Bul'),
+              find.widgetWithText(FilledButton, 'Projeleri Keşfet'),
             )
             .onPressed,
         isNull,
@@ -374,9 +363,9 @@ void main() {
       await tester.pumpAndSettle();
       await tester.tap(find.text('Kaydet'));
       await tester.pumpAndSettle();
-      await tester.ensureVisible(find.text('Tarifleri Bul'));
+      await tester.ensureVisible(find.text('Projeleri Keşfet'));
       await tester.pumpAndSettle();
-      await tester.tap(find.text('Tarifleri Bul'));
+      await tester.tap(find.text('Projeleri Keşfet'));
       await tester.pumpAndSettle();
       await tester.scrollUntilVisible(
         find.byKey(const ValueKey('project-card-project_38')),
@@ -393,11 +382,23 @@ void main() {
       await tester.tap(find.text('Örgü İpi Kasesi'));
       await tester.pumpAndSettle();
       expect(find.text('Örgü İpi Kasesi'), findsOneWidget);
-      expect(find.text('•  1 adet Yoğurt kabı'), findsOneWidget);
-      await tester.scrollUntilVisible(find.text('Güvenlik uyarısı'), 300);
+      final material = tester.widget<RecipeIconTile>(
+        find
+            .descendant(
+              of: find.byKey(const Key('required-material-icons')),
+              matching: find.byType(RecipeIconTile),
+            )
+            .first,
+      );
+      expect(material.item.id, 'yogurt_container');
+      expect(material.item.caption, '1 adet');
+      await tester.tap(find.byTooltip('Güvenlik uyarısı'));
+      await tester.pumpAndSettle();
       expect(
         find.text(
-          catalog.singleWhere((p) => p.id == 'project_38').safetyWarning,
+          GuideLanguage.neutral(
+            catalog.singleWhere((p) => p.id == 'project_38').safetyWarning,
+          ),
         ),
         findsOneWidget,
       );

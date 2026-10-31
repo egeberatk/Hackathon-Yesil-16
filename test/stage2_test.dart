@@ -206,12 +206,13 @@ void main() {
       await app(tester, HomeScreen(photoService: photos));
       if (source == ImageSource.camera) {
         await tap(tester, find.text('Atığını Tara'));
-        await tap(tester, find.text('Fotoğraf çek'));
       } else {
         await tap(tester, find.text('Galeriden seç'));
       }
       expect(photos.sources, [source]);
       expect(find.byType(PhotoPreviewScreen), findsNothing);
+      expect(find.byType(BottomSheet), findsNothing);
+      expect(find.byType(SnackBar), findsNothing);
       expect(
         tester
             .widget<FilledButton>(
@@ -380,12 +381,11 @@ void main() {
       await tap(tester, cardTooltip(0, 'Miktarı artır'));
       expect(enabled(tester), isFalse);
       await tap(tester, cardAction(0, 'Onayla'));
-      await tap(tester, cardAction(1, 'Onayla'));
-      await tap(tester, find.text('Tarifleri Bul'));
+      await tap(tester, find.text('Projeleri Keşfet'));
       final items = tester
           .widget<ProjectsScreen>(find.byType(ProjectsScreen))
           .items;
-      expect(items, hasLength(2));
+      expect(items, hasLength(1));
       expect(
         items.every(
           (item) =>
@@ -404,7 +404,9 @@ void main() {
     (tester) async {
       await app(tester, const MaterialConfirmationScreen(initialItems: []));
       expect(enabled(tester), isFalse);
-      await tap(tester, find.text('Malzeme ekle'));
+      await tap(tester, find.text('Malzeme Ekle'));
+      await tap(tester, find.byKey(const ValueKey('pick-material-glass_jar')));
+      await tap(tester, find.byTooltip('Malzemeyi düzenle'));
       await tester.enterText(
         find.byKey(const Key('material-name')),
         'Küçük kavanoz',
@@ -419,7 +421,7 @@ void main() {
       expect(find.text('2 adet'), findsOneWidget);
       expect(enabled(tester), isFalse);
       await tap(tester, find.text('Onayla'));
-      await tap(tester, find.text('Onayı geri al'));
+      await tap(tester, find.byTooltip('Onayı geri al'));
       expect(enabled(tester), isFalse);
       await tap(tester, find.byTooltip('Malzemeyi sil'));
       expect(find.byType(MaterialCard), findsNothing);

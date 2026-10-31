@@ -1,0 +1,141 @@
+{
+  "version": 1,
+  "photos": {
+    "project_01": {
+      "kind": "ai_generated",
+      "asset": "assets/recipes/photos/project_01.webp",
+      "title": "Karton Rulo Masa Düzenleyici",
+      "generator": "image_gen",
+      "verified": true,
+      "matches_recipe": true
+    },
+    "project_03": {
+      "kind": "ai_generated",
+      "asset": "assets/recipes/photos/project_03.webp",
+      "title": "Geri Dönüşüm XOX Oyunu",
+      "generator": "image_gen",
+      "verified": true,
+      "matches_recipe": true
+    },
+    "project_15": {
+      "kind": "ai_generated",
+      "asset": "assets/recipes/photos/project_15.webp",
+      "title": "Şişe Bowling Oyunu",
+      "generator": "image_gen",
+      "verified": true,
+      "matches_recipe": true
+    },
+    "project_19": {
+      "kind": "ai_generated",
+      "asset": "assets/recipes/photos/project_19.webp",
+      "title": "Renk Eşleştirme Hafıza Oyunu",
+      "generator": "image_gen",
+      "verified": true,
+      "matches_recipe": true
+    },
+    "project_26": {
+      "kind": "ai_generated",
+      "asset": "assets/recipes/photos/project_26.webp",
+      "title": "Karton Dürbün Oyuncak",
+      "generator": "image_gen",
+      "verified": true,
+      "matches_recipe": true
+    },
+    "project_38": {
+      "kind": "ai_generated",
+      "asset": "assets/recipes/photos/project_38.webp",
+      "title": "Örgü İpi Kasesi",
+      "generator": "image_gen",
+      "verified": true,
+      "matches_recipe": true
+    },
+    "project_39": {
+      "kind": "ai_generated",
+      "asset": "assets/recipes/photos/project_39.webp",
+      "title": "Ritim Davulu",
+      "generator": "image_gen",
+      "verified": true,
+      "matches_recipe": true
+    },
+    "project_40": {
+      "kind": "ai_generated",
+      "asset": "assets/recipes/photos/project_40.webp",
+      "title": "Kendini Sulayan PET Saksı",
+      "generator": "image_gen",
+      "verified": true,
+      "matches_recipe": true
+    },
+    "project_41": {
+      "kind": "ai_generated",
+      "asset": "assets/recipes/photos/project_41.webp",
+      "title": "PET Şişeden Poşet Ağzı Kapatıcı",
+      "generator": "image_gen",
+      "verified": true,
+      "matches_recipe": true
+    },
+    "project_42": {
+      "kind": "ai_generated",
+      "asset": "assets/recipes/photos/project_42.webp",
+      "title": "PET Şişeden Huni",
+      "generator": "image_gen",
+      "verified": true,
+      "matches_recipe": true
+    },
+    "project_43": {
+      "kind": "ai_generated",
+      "asset": "assets/recipes/photos/project_43.webp",
+      "title": "Yoğurt Kabından Asma Soğan ve Sarımsak Sepeti",
+      "generator": "image_gen",
+      "verified": true,
+      "matches_recipe": true
+    },
+    "project_44": {
+      "kind": "ai_generated",
+      "asset": "assets/recipes/photos/project_44.webp",
+      "title": "Yoğurt Kabından Kumbara",
+      "generator": "image_gen",
+      "verified": true,
+      "matches_recipe": true
+    },
+    "project_45": {
+      "kind": "ai_generated",
+      "asset": "assets/recipes/photos/project_45.webp",
+      "title": "Karton Kutudan Kedi Tırmalama Bloğu",
+      "generator": "image_gen",
+      "verified": true,
+      "matches_recipe": true
+    },
+    "project_46": {
+      "kind": "ai_generated",
+      "asset": "assets/recipes/photos/project_46.webp",
+      "title": "Karton Çekmece İçi Izgara Ayraç",
+      "generator": "image_gen",
+      "verified": true,
+      "matches_recipe": true
+    },
+    "project_47": {
+      "kind": "ai_generated",
+      "asset": "assets/recipes/photos/project_47.webp",
+      "title": "Cam Kavanozdan Meyve Sineği Tuzağı",
+      "generator": "image_gen",
+      "verified": true,
+      "matches_recipe": true
+    },
+    "project_48": {
+      "kind": "ai_generated",
+      "asset": "assets/recipes/photos/project_48.webp",
+      "title": "Yumurta Kolisinden Mangala Oyunu",
+      "generator": "image_gen",
+      "verified": true,
+      "matches_recipe": true
+    },
+    "project_49": {
+      "kind": "ai_generated",
+      "asset": "assets/recipes/photos/project_49.webp",
+      "title": "Kâğıt Bardaktan Mini Masa Çöp Kutusu",
+      "generator": "image_gen",
+      "verified": true,
+      "matches_recipe": true
+    }
+  }
+}

@@ -6,30 +6,52 @@ import '../services/demo_data_service.dart';
 import '../widgets/flow_notice.dart';
 import '../widgets/material_card.dart';
 import '../widgets/material_editor.dart';
+import '../widgets/material_type_picker.dart';
 import '../widgets/page_body.dart';
-import '../widgets/recipe_badge.dart';
 import 'projects_screen.dart';
 
 class MaterialConfirmationScreen extends StatefulWidget {
-  const MaterialConfirmationScreen({super.key, this.initialItems});
-  // null: example list; []: manual entry. Every detected row needs user consent.
+  const MaterialConfirmationScreen({
+    super.key,
+    this.initialItems,
+    this.candidateExplanation,
+  });
   final List<MaterialItem>? initialItems;
+  final String? candidateExplanation;
   @override
   State<MaterialConfirmationScreen> createState() =>
       _MaterialConfirmationScreenState();
 }
 
+List<MaterialItem> _combineDetected(List<MaterialItem> source) {
+  final result = <MaterialItem>[];
+  for (final original in source) {
+    final item = original.copy()..requiresConfirmation = true;
+    final index = item.type == WasteType.unknown
+        ? -1
+        : result.indexWhere((p) => p.type == item.type);
+    if (index < 0) {
+      result.add(item);
+    } else {
+      result[index].quantity += item.quantity;
+    }
+  }
+  return result;
+}
+
 class _MaterialConfirmationScreenState
     extends State<MaterialConfirmationScreen> {
-  late final List<MaterialItem> _items =
-      (widget.initialItems ?? DemoDataService.materials())
-          .map((item) => item.copy()..requiresConfirmation = true)
-          .toList();
-  bool _editing = false;
-  bool _finding = false;
+  late final _items = _combineDetected(
+    widget.initialItems ?? DemoDataService.materials(),
+  );
+  bool _editing = false, _finding = false;
   List<MaterialItem> get _confirmed => _items
       .where(
-        (item) => !item.requiresConfirmation && item.type != WasteType.unknown,
+        (item) =>
+            !item.requiresConfirmation &&
+            item.type != WasteType.unknown &&
+            item.quantity >= 1 &&
+            item.quantity <= 999,
       )
       .toList();
 
@@ -41,11 +63,33 @@ class _MaterialConfirmationScreenState
         context: context,
         isScrollControlled: true,
         useSafeArea: true,
-        builder: (_) => MaterialEditor(item: item),
+        builder: (_) => item == null
+            ? const MaterialTypePicker()
+            : MaterialEditor(item: item),
       );
       if (!mounted || result == null) return;
+      final index = _items.indexWhere(
+        (p) =>
+            p != item &&
+            p.type == result.type &&
+            result.type != WasteType.unknown,
+      );
+      if (index >= 0 && _items[index].quantity + result.quantity > 999) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('Toplam adet 999’u geçemez. Mevcut miktarı düzenle.'),
+          ),
+        );
+        return;
+      }
       setState(() {
-        if (item == null) {
+        if (index >= 0) {
+          final existing = _items[index];
+          existing.quantity += result.quantity;
+          existing.requiresConfirmation =
+              existing.requiresConfirmation || result.requiresConfirmation;
+          if (item != null) _items.remove(item);
+        } else if (item == null) {
           _items.add(result);
         } else {
           _items[_items.indexOf(item)] = result;
@@ -57,7 +101,9 @@ class _MaterialConfirmationScreenState
   }
 
   void _quantity(MaterialItem item, int delta) => setState(() {
-    item.quantity = (item.quantity + delta).clamp(1, 999);
+    final next = item.quantity + delta;
+    if (next < 1 || (delta > 0 && next > 999)) return;
+    item.quantity = next;
     item.requiresConfirmation = true;
   });
 
@@ -75,51 +121,78 @@ class _MaterialConfirmationScreenState
     }
   }
 
+  void _explain() => showModalBottomSheet<void>(
+    context: context,
+    useSafeArea: true,
+    isScrollControlled: true,
+    builder: (context) => SingleChildScrollView(
+      padding: const EdgeInsets.all(24),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Text(
+            'Fotoğrafın sonucu',
+            style: Theme.of(context).textTheme.titleLarge,
+          ),
+          const SizedBox(height: 12),
+          Text(widget.candidateExplanation!),
+          const SizedBox(height: 16),
+          FilledButton(
+            onPressed: () => Navigator.pop(context),
+            child: const Text('Kapat'),
+          ),
+        ],
+      ),
+    ),
+  );
+
   @override
   Widget build(BuildContext context) => Scaffold(
-    appBar: AppBar(title: const Text('Malzemelerini onayla')),
+    appBar: AppBar(toolbarHeight: 48),
     body: PageBody(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          const Align(
-            alignment: Alignment.centerLeft,
-            child: RecipeBadge(
-              label: '02 · Malzemeler',
-              icon: Icons.fact_check_outlined,
-            ),
-          ),
-          const SizedBox(height: 16),
           Text(
-            'Elindekiler, yeni fikirlerin.',
+            'Malzemelerini Doğrula',
             style: Theme.of(context).textTheme.headlineMedium,
           ),
           const SizedBox(height: 8),
           Text(
             widget.initialItems == null
-                ? 'Bu liste örnektir; fotoğraftan tespit edilmedi. Malzemelerini kontrol edip onayla.'
-                : 'Türleri ve adetleri kontrol et. Yalnızca onayladığın malzemelerle tarif arayacağız.',
+                ? 'Örnek liste. Malzemelerini kontrol et.'
+                : _items.isEmpty
+                ? 'Eksik malzemelerini ekleyebilirsin.'
+                : 'Fotoğrafta bunları bulduk. Doğru mu?',
             style: Theme.of(context).textTheme.bodyMedium
                 ?.copyWith(color: AppTheme.muted),
           ),
           const SizedBox(height: 24),
           if (_items.isEmpty)
-            const FlowNotice(
-              title: 'Malzemelerini ekle',
-              message: 'Henüz malzeme yok. Bir malzeme ekleyerek başla.',
-            )
-          else
-            Padding(
-              padding: const EdgeInsets.only(bottom: 16),
-              child: Text(
-                _confirmed.isEmpty
-                    ? 'Henüz onayladığın malzeme yok. Kartlardan seçim yap.'
-                    : 'Onaylanmayan malzemeler tarif aramasına katılmaz.',
-                style: Theme.of(context).textTheme.bodySmall,
+            const Padding(
+              padding: EdgeInsets.only(bottom: 16),
+              child: FlowNotice(
+                title: 'Malzemelerini ekle',
+                message: 'Henüz malzeme yok. Bir malzeme ekleyerek başla.',
               ),
             ),
-          ..._items.map(
-            (item) => MaterialCard(
+          if (widget.candidateExplanation != null) ...[
+            if (_items.isEmpty)
+              const Text('Kataloğa uygun malzeme bulunamadı.'),
+            Align(
+              alignment: Alignment.centerLeft,
+              child: TextButton.icon(
+                key: const Key('candidate-explanation'),
+                onPressed: _explain,
+                icon: const Icon(Icons.info_outline, size: 18),
+                label: const Text('Fotoğrafın sonucu'),
+              ),
+            ),
+            const SizedBox(height: 12),
+          ],
+          for (final item in _items)
+            MaterialCard(
               key: ObjectKey(item),
               item: item,
               onEdit: () => _edit(item: item),
@@ -129,12 +202,12 @@ class _MaterialConfirmationScreenState
                 () => item.requiresConfirmation = !item.requiresConfirmation,
               ),
             ),
-          ),
-          const SizedBox(height: 16),
+          const SizedBox(height: 8),
           OutlinedButton.icon(
+            key: const Key('add-material'),
             onPressed: () => _edit(),
             icon: const Icon(Icons.add_outlined),
-            label: const Text('Malzeme ekle'),
+            label: const Text('Malzeme Ekle'),
           ),
           const SizedBox(height: 24),
         ],
@@ -150,7 +223,7 @@ class _MaterialConfirmationScreenState
         child: Padding(
           padding: EdgeInsets.symmetric(
             horizontal: AppTheme.pageInset(MediaQuery.sizeOf(context).width),
-            vertical: 16,
+            vertical: 12,
           ),
           child: Center(
             heightFactor: 1,
@@ -161,20 +234,29 @@ class _MaterialConfirmationScreenState
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   Text(
-                    _confirmed.isEmpty
-                        ? 'Devam etmek için en az bir malzemeyi onayla.'
-                        : 'Yalnızca onayladığın malzemeler kullanılacak.',
+                    'Onayladığın malzemelere uygun projeleri bulacağız.',
                     textAlign: TextAlign.center,
                     style: Theme.of(context).textTheme.bodySmall,
                   ),
-                  const SizedBox(height: 12),
-                  FilledButton.icon(
+                  const SizedBox(height: 10),
+                  FilledButton(
                     key: const Key('find-recipes'),
                     onPressed: _confirmed.isEmpty || _finding
                         ? null
                         : _findRecipes,
-                    icon: const Icon(Icons.arrow_forward_outlined),
-                    label: const Text('Tarifleri Bul'),
+                    child: const Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Flexible(
+                          child: Text(
+                            'Projeleri Keşfet',
+                            textAlign: TextAlign.center,
+                          ),
+                        ),
+                        SizedBox(width: 8),
+                        Icon(Icons.arrow_forward_outlined),
+                      ],
+                    ),
                   ),
                 ],
               ),

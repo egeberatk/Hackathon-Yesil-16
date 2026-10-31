@@ -10,10 +10,15 @@ class RecipeStepCard extends StatelessWidget {
     required this.total,
     required this.text,
     this.media,
+    this.summary,
+    this.warning,
+    this.showText = true,
   });
   final int number, total;
   final String text;
   final Widget? media;
+  final String? summary, warning;
+  final bool showText;
   @override
   Widget build(BuildContext context) => Container(
     padding: const EdgeInsets.all(24),
@@ -51,8 +56,25 @@ class RecipeStepCard extends StatelessWidget {
           const SizedBox(height: 20),
           ClipRRect(borderRadius: BorderRadius.circular(16), child: media!),
         ],
-        const SizedBox(height: 20),
-        Text(text, style: Theme.of(context).textTheme.bodyLarge),
+        if (showText) ...[
+          const SizedBox(height: 20),
+          Text(summary ?? text, style: Theme.of(context).textTheme.bodyLarge),
+        ],
+        if (warning != null) ...[
+          const SizedBox(height: 12),
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const Icon(
+                Icons.shield_outlined,
+                color: AppTheme.accent,
+                size: 20,
+              ),
+              const SizedBox(width: 8),
+              Expanded(child: Text(warning!)),
+            ],
+          ),
+        ],
       ],
     ),
   );

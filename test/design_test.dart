@@ -7,7 +7,9 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:hackathon_projesi/core/app_theme.dart';
-import 'package:hackathon_projesi/main.dart';
+import 'package:hackathon_projesi/screens/home_screen.dart';
+import 'package:hackathon_projesi/services/photo_service.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:hackathon_projesi/models/material_item.dart';
 import 'package:hackathon_projesi/screens/projects_screen.dart';
 import 'package:hackathon_projesi/services/recipe_repository.dart';
@@ -21,6 +23,13 @@ class DesignBundle extends CachingAssetBundle {
       SynchronousFuture(source);
   @override
   Future<ByteData> load(String key) => throw UnsupportedError(key);
+}
+
+class DesignPhotos extends PhotoService {
+  @override
+  Future<XFile?> recover() async => null;
+  @override
+  Future<XFile?> pick(ImageSource source) async => null;
 }
 
 void main() {
@@ -62,7 +71,14 @@ void main() {
               padding: safeArea,
               viewPadding: safeArea,
             ),
-            child: RepaintBoundary(key: boundary, child: const ReBornApp()),
+            child: RepaintBoundary(
+              key: boundary,
+              child: MaterialApp(
+                debugShowCheckedModeBanner: false,
+                theme: AppTheme.light,
+                home: HomeScreen(photoService: DesignPhotos()),
+              ),
+            ),
           ),
         ),
       );
@@ -146,8 +162,8 @@ void main() {
         expect(tester.takeException(), isNull);
         await tester.tap(find.widgetWithText(NavigationDestination, 'Tara'));
         await tester.pumpAndSettle();
-        expect(find.text('Fotoğraf çek'), findsOneWidget);
-        expect(find.text('Galeriden seç'), findsOneWidget);
+        expect(find.byType(BottomSheet), findsNothing);
+        expect(find.byType(NavigationBar), findsOneWidget);
         expect(tester.takeException(), isNull);
         await tester.tapAt(const Offset(5, 5));
         await tester.pumpAndSettle();
@@ -195,13 +211,13 @@ void main() {
     await tester.ensureVisible(find.byType(ProjectCard).first);
     await tester.tap(find.byType(ProjectCard).first);
     await tester.pumpAndSettle();
-    expect(find.text('Adım adım dönüşüm'), findsOneWidget);
+    expect(find.text('Proje detayı'), findsOneWidget);
     await tester.tap(find.byType(BackButton));
     await tester.pumpAndSettle();
     await tester.ensureVisible(find.text('Atığını Tara'));
     await tester.tap(find.text('Atığını Tara'));
     await tester.pumpAndSettle();
-    expect(find.text('Fotoğraf çek'), findsOneWidget);
+    expect(find.byType(BottomSheet), findsNothing);
     expect(find.text('Galeriden seç'), findsWidgets);
     expect(tester.takeException(), isNull);
   });

@@ -59,7 +59,7 @@ void main() {
   test('Standart kimlikler korunur; bilinmeyenler zorla eşlenmez', () {
     expect(
       WasteType.values.where((type) => type.materialId != null).length,
-      10,
+      11,
     );
     for (final type in WasteType.values) {
       expect(WasteType.fromId(type.materialId), type);
@@ -171,12 +171,12 @@ void main() {
     );
     service.result.complete([MaterialItem.fromJson(detection())]);
     await tester.pumpAndSettle();
-    expect(find.text('Malzemelerini onayla'), findsOneWidget);
+    expect(find.text('Malzemelerini Doğrula'), findsOneWidget);
     expect(find.text('Su şişesi'), findsOneWidget);
     expect(
       tester
           .widget<FilledButton>(
-            find.widgetWithText(FilledButton, 'Tarifleri Bul'),
+            find.widgetWithText(FilledButton, 'Projeleri Keşfet'),
           )
           .onPressed,
       isNull,
@@ -227,7 +227,11 @@ void main() {
     await tester.ensureVisible(find.byType(DropdownButtonFormField<WasteType>));
     await tester.tap(find.byType(DropdownButtonFormField<WasteType>));
     await tester.pumpAndSettle();
-    await tester.ensureVisible(find.text('Cam kavanoz').last);
+    await tester.scrollUntilVisible(
+      find.text('Cam kavanoz'),
+      -150,
+      scrollable: find.byType(Scrollable).last,
+    );
     await tester.pumpAndSettle();
     await tester.tap(find.text('Cam kavanoz').last);
     await tester.pumpAndSettle();
@@ -242,7 +246,7 @@ void main() {
     expect(
       tester
           .widget<FilledButton>(
-            find.widgetWithText(FilledButton, 'Tarifleri Bul'),
+            find.widgetWithText(FilledButton, 'Projeleri Keşfet'),
           )
           .onPressed,
       isNotNull,

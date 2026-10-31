@@ -5,7 +5,8 @@ import '../models/upcycling_project.dart';
 import '../screens/project_detail_screen.dart';
 import '../services/recipe_matching_service.dart';
 import 'recipe_badge.dart';
-import 'workshop_artwork.dart';
+import 'recipe_product_photo.dart';
+import 'recipe_project_preview.dart';
 
 class ProjectCard extends StatelessWidget {
   const ProjectCard({
@@ -45,8 +46,16 @@ class ProjectCard extends StatelessWidget {
           children: [
             AspectRatio(
               aspectRatio: compact ? 1.7 : 1.9,
-              child: WorkshopArtwork(
-                materialId: project.requiredMaterials.first.materialId,
+              child: RecipeProductPhoto(
+                projectId: project.id,
+                height: null,
+                fallback: ColoredBox(
+                  color: const Color(0xFFEAF4ED),
+                  child: Padding(
+                    padding: const EdgeInsets.all(12),
+                    child: RecipeProjectPreview(project: project),
+                  ),
+                ),
               ),
             ),
             Padding(

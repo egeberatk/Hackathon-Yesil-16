@@ -1,0 +1,20 @@
+[
+  {"name":"Kâğıt bardak","paper":true,"electronic":false},
+  {"name":"Kağıt kahve bardağı","paper":true,"electronic":false},
+  {"name":"Karton içecek bardağı","paper":true,"electronic":false},
+  {"name":"Tek kullanımlık karton bardaklar","paper":true,"electronic":false},
+  {"name":"Paper coffee cup","paper":true,"electronic":false},
+  {"name":"Plastik kaplamalı kâğıt bardak","paper":true,"electronic":false},
+  {"name":"Plastik bardak","paper":false,"electronic":false},
+  {"name":"Cam bardağı","paper":false,"electronic":false},
+  {"name":"Karton rulo","paper":false,"electronic":false},
+  {"name":"Karton bardak kılıfı","paper":false,"electronic":false},
+  {"name":"Kulaklık","paper":false,"electronic":true},
+  {"name":"Kablosuz kulaklık","paper":false,"electronic":true},
+  {"name":"Telefon","paper":false,"electronic":true},
+  {"name":"Bilgisayar","paper":false,"electronic":true},
+  {"name":"Kulaklık şarj kutusu","paper":false,"electronic":true},
+  {"name":"Telefonun karton kutusu","paper":false,"electronic":false},
+  {"name":"Karton kulaklık kutusu","paper":false,"electronic":false},
+  {"name":"Telefon kutusu","paper":false,"electronic":false}
+]

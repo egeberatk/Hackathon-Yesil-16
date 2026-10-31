@@ -75,6 +75,8 @@ flutter:
   uses-material-design: true
   assets:
     - assets/recipes/projects.json
+    - assets/recipe_photos/
+    - assets/recipes/photos/
 
   # To add assets to your application, add an assets section, like this:
   # assets:

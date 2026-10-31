@@ -9,6 +9,7 @@ enum WasteType {
   plasticPackaging('Plastik ambalaj', 'plastic_packaging'),
   yogurtContainer('Yoğurt kabı', 'yogurt_container'),
   eggCarton('Yumurta kolisi', 'egg_carton'),
+  paperCup('Kâğıt bardak', 'paper_cup'),
   unknown('Bilinmeyen / onay gerekli', null);
 
   const WasteType(this.label, this.materialId);

@@ -87,19 +87,23 @@ Boş bir analiz sonucu demo malzemelerle doldurulmaz.
 ```
 
 Standart kimlikler: `pet_bottle`, `plastic_cap`, `cardboard_box`, `cardboard_roll`,
-`clean_paper`, `glass_jar`, `metal_can`, `plastic_packaging`, `yogurt_container`, `egg_carton`.
+`clean_paper`, `glass_jar`, `metal_can`, `plastic_packaging`, `yogurt_container`, `egg_carton`, `paper_cup`.
 `confidence`: `certain` veya `uncertain`. Adet 1–999, nesne adı 1–120 karakter;
 bir yanıtta en fazla 50 satır bulunabilir.
 Desteklenmeyen kimlikler adları korunarak `material_id: null`, `confidence: uncertain`,
-`requires_confirmation: true` hâline getirilir; isimden tahmini kategori eşleştirilmez.
+`requires_confirmation: true` hâline getirilir; bilinmeyen nesne başka bir kategoriye zorlanmaz.
+Kâğıt/karton içecek bardağının açık isim varyasyonları `paper_cup` olarak normalleştirilir;
+plastik/cam bardak, karton rulo ve bardak kılıfı bu kategoriye girmez. Düzeltilen
+kimlikler kullanıcı onayı gerektirir. Elektronik eşyaların adı algılama yanıtında
+korunur, ancak geri dönüşüm malzemesi kimliği verilmez.
 Belirsiz tespitler de her zaman onay gerektirir.
 
-Onay ekranında nesne adı, tür ve adet düzenlenebilir. Onay gereken nesne düzenlenip
-**Kaydet** ile onaylanmalıdır. Bilinmeyen nesne için kullanıcı uygun bir tür seçmeli
-veya nesneyi silmelidir; uymayan bir kategori seçmek zorunda değildir.
-Onay gerektiren satırlar çözülmeden proje adımına geçilmez.
-Mevcut örnek tarifler korunur; yeni kategoriler için henüz tarif eklenmediğinden
-bazı malzemeler yalnızca ek malzeme gerektiren örnek tarifleri gösterebilir.
+Flutter'da ayrı `MaterialCandidateFilter`, ham analizden sonra gerçek katalogdaki
+`required_materials` kimliklerine göre adayları seçer; elektronik ve karşılığı
+olmayan nesneleri eler. Hiç aday kalmazsa açıklama ve manuel giriş gösterilir;
+demo veri eklenmez. Kulaklık ve kâğıt bardak örneğinde yalnızca bardak aday olur.
+Onay ekranında nesne adı, tür ve adet düzenlenebilir. Yalnızca kullanıcının
+onayladığı malzemeler eşleştirmede sayılır. Yardımcı araçlar atık envanterine katılmaz.
 
 Hatalar aynı biçimde döner:
 

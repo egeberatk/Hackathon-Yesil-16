@@ -49,6 +49,7 @@ class _HomeScreenState extends State<HomeScreen> {
     ),
   );
   Future<void> _pick(ImageSource source) async {
+    if (_busy) return;
     setState(() => _busy = true);
     try {
       final photo = await _photos.pick(source);
@@ -70,50 +71,6 @@ class _HomeScreenState extends State<HomeScreen> {
     }
   }
 
-  Future<void> _showPicker() async {
-    if (_busy) return;
-    final source = await showModalBottomSheet<ImageSource>(
-      context: context,
-      isScrollControlled: true,
-      useSafeArea: true,
-      builder: (context) => SingleChildScrollView(
-        child: Padding(
-          padding: EdgeInsets.fromLTRB(
-            24,
-            8,
-            24,
-            24 + MediaQuery.viewInsetsOf(context).bottom,
-          ),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Text(
-                'Bir fotoğrafla başla',
-                style: Theme.of(context).textTheme.headlineSmall,
-              ),
-              const SizedBox(height: 8),
-              const Text('Malzemelerini net ve aydınlık bir yerde görüntüle.'),
-              const SizedBox(height: 24),
-              FilledButton.icon(
-                onPressed: () => Navigator.pop(context, ImageSource.camera),
-                icon: const Icon(Icons.photo_camera_outlined),
-                label: const Text('Fotoğraf çek'),
-              ),
-              const SizedBox(height: 12),
-              OutlinedButton.icon(
-                onPressed: () => Navigator.pop(context, ImageSource.gallery),
-                icon: const Icon(Icons.photo_library_outlined),
-                label: const Text('Galeriden seç'),
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
-    if (mounted && source != null) await _pick(source);
-  }
-
   @override
   Widget build(BuildContext context) => Scaffold(
     body: _selectedTab == 2 ? _catalog(context) : _home(context),
@@ -125,7 +82,7 @@ class _HomeScreenState extends State<HomeScreen> {
         selectedIndex: _selectedTab,
         onDestinationSelected: (index) {
           if (index == 1) {
-            _showPicker();
+            _pick(ImageSource.camera);
             return;
           }
           setState(() => _selectedTab = index);
@@ -301,7 +258,7 @@ class _HomeScreenState extends State<HomeScreen> {
           minimumSize: const Size(0, 56),
           padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 16),
         ),
-        onPressed: _busy ? null : _showPicker,
+        onPressed: _busy ? null : () => _pick(ImageSource.camera),
         icon: const Icon(Icons.photo_camera_outlined),
         label: const Text('Atığını Tara'),
       );

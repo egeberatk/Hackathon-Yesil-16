@@ -145,11 +145,11 @@ void main() {
       await tester.tap(find.text('Analiz Et'));
       await tester.pumpAndSettle();
       expect(requests, 1);
-      expect(find.text('Malzemelerini onayla'), findsOneWidget);
+      expect(find.text('Malzemelerini Doğrula'), findsOneWidget);
       expect(
         tester
             .widget<FilledButton>(
-              find.widgetWithText(FilledButton, 'Tarifleri Bul'),
+              find.widgetWithText(FilledButton, 'Projeleri Keşfet'),
             )
             .onPressed,
         isNull,
@@ -163,9 +163,9 @@ void main() {
       await tester.pumpAndSettle();
       await tester.tap(find.text('Kaydet'));
       await tester.pumpAndSettle();
-      await tester.ensureVisible(find.text('Tarifleri Bul'));
+      await tester.ensureVisible(find.text('Projeleri Keşfet'));
       await tester.pumpAndSettle();
-      await tester.tap(find.text('Tarifleri Bul'));
+      await tester.tap(find.text('Projeleri Keşfet'));
       await tester.pumpAndSettle();
       expect(find.text('Dönüşüm fikirleri'), findsOneWidget);
       await tester.scrollUntilVisible(
@@ -185,7 +185,7 @@ void main() {
       await tester.pumpAndSettle();
       await tester.tap(find.text('Akış testi test_ready'));
       await tester.pumpAndSettle();
-      expect(find.text('Adım adım dönüşüm'), findsOneWidget);
+      expect(find.text('Proje detayı'), findsOneWidget);
       expect(tester.takeException(), isNull);
     },
   );

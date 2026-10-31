@@ -20,6 +20,8 @@ import 'package:hackathon_projesi/widgets/project_card.dart';
 import 'package:hackathon_projesi/widgets/recipe_step_card.dart';
 import 'package:hackathon_projesi/widgets/recipe_step_viewer.dart';
 import 'package:hackathon_projesi/widgets/recipe_motion_player.dart';
+import 'package:hackathon_projesi/animations/pet_planter_steps.dart';
+import 'package:hackathon_projesi/widgets/recipe_icon_grid.dart';
 
 class CatalogAssets extends CachingAssetBundle {
   CatalogAssets(this.source);
@@ -155,7 +157,7 @@ void main() {
         findsOneWidget,
       );
       await tap(tester, find.widgetWithText(NavigationDestination, 'Tara'));
-      expect(find.text('Fotoğraf çek'), findsOneWidget);
+      expect(find.byType(BottomSheet), findsNothing);
       await tester.tapAt(const Offset(5, 5));
       await tester.pumpAndSettle();
       await tap(
@@ -213,11 +215,18 @@ void main() {
         );
       }
       await tap(tester, missing);
+      final missingTiles = tester.widgetList<RecipeIconTile>(
+        find.descendant(
+          of: find.byKey(const Key('missing-material-icons')),
+          matching: find.byType(RecipeIconTile),
+        ),
+      );
       for (final material in card.match!.missingMaterials) {
-        expect(
-          find.text('${material.name}: ${material.quantity} adet eksik'),
-          findsOneWidget,
+        final tile = missingTiles.singleWhere(
+          (tile) => tile.item.id == material.materialId,
         );
+        expect(tile.item.name, material.name);
+        expect(tile.item.caption, '${material.quantity} eksik');
       }
       expect(tester.takeException(), isNull);
     },
@@ -230,6 +239,7 @@ void main() {
         (project) => project.id == 'project_40',
       );
       await app(tester, ProjectDetailScreen(project: project));
+      await tap(tester, find.byKey(const Key('start-building')));
       await tester.scrollUntilVisible(find.byType(RecipeStepCard), 400);
       expect(
         tester.widget<RecipeStepCard>(find.byType(RecipeStepCard)).text,
@@ -251,14 +261,18 @@ void main() {
         expect(card.number, step + 1);
         expect(card.total, project.steps.length);
         expect(card.text, project.steps[step]);
-        expect(find.text(project.steps[step]), findsOneWidget);
+        expect(
+          find.text(PetPlanterSteps.steps[step].description),
+          findsOneWidget,
+        );
       }
       expect(
         tester
             .widget<FilledButton>(find.byKey(const Key('next-step')))
             .onPressed,
-        isNull,
+        isNotNull,
       );
+      expect(find.text('Bitir'), findsOneWidget);
       for (var step = project.steps.length - 2; step >= 0; step--) {
         await tap(tester, find.byKey(const Key('previous-step')));
         expect(
@@ -355,6 +369,7 @@ void main() {
           tester,
           find.byKey(const ValueKey('project-card-project_38')),
         );
+        await tap(tester, find.byKey(const Key('start-building')));
         await tester.scrollUntilVisible(
           find.byKey(const Key('next-step')),
           350,
@@ -369,7 +384,9 @@ void main() {
           tester.widget<RecipeStepCard>(find.byType(RecipeStepCard)).number,
           1,
         );
-        await tester.scrollUntilVisible(find.text('Güvenlik uyarısı'), 350);
+        await tap(tester, find.byType(BackButton));
+        await tap(tester, find.byTooltip('Güvenlik uyarısı'));
+        expect(find.textContaining('keskin plastik'), findsOneWidget);
         expect(tester.takeException(), isNull);
       },
     );
@@ -408,6 +425,7 @@ void main() {
     );
     await app(tester, ProjectDetailScreen(project: project), boundary: key);
     await capture(key, 'recipe-detail');
+    await tap(tester, find.byKey(const Key('start-building')));
     await tester.scrollUntilVisible(find.byType(RecipeStepCard), 350);
     await tap(tester, find.byKey(const Key('next-step')));
     await capture(key, 'recipe-step');

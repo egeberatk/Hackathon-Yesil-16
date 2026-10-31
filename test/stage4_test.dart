@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'dart:convert';
 import 'dart:math' as math;
 import 'dart:ui' as ui;
 
@@ -13,6 +14,7 @@ import 'package:hackathon_projesi/models/upcycling_project.dart';
 import 'package:hackathon_projesi/screens/project_detail_screen.dart';
 import 'package:hackathon_projesi/services/recipe_repository.dart';
 import 'package:hackathon_projesi/widgets/pet_planter_scene.dart';
+import 'package:hackathon_projesi/widgets/pet_planter_parts.dart';
 import 'package:hackathon_projesi/widgets/recipe_motion_player.dart';
 import 'package:hackathon_projesi/widgets/recipe_step_card.dart';
 import 'package:hackathon_projesi/widgets/recipe_step_viewer.dart';
@@ -211,19 +213,72 @@ void main() {
     expect(rotationFrames, greaterThan(10));
   });
 
+  test(
+    'Scissors cut the stationary bottle completely before the halves separate',
+    () {
+      final sequence = PetPlanterSteps.steps.first.sequence;
+      var cuttingFrames = 0;
+      for (var i = 0; i <= 200; i++) {
+        final value = sequence.sample(i / 200);
+        if (value['cut'].amount < 1) {
+          expect(value['upper'].offset, Offset.zero);
+        }
+        if (value['cut'].amount > 0 && value['cut'].amount < 1) {
+          cuttingFrames++;
+          final tip = PetPlanterGeometry.scissorsTip + value['scissors'].offset;
+          expect(tip.dx, inInclusiveRange(105, 215));
+          expect(tip.dy, 180);
+        }
+        if (value['upper'].offset.dy < 0) {
+          expect(value['cut'].amount, 1);
+          expect(value['scissors'].offset.dx, -290);
+        }
+      }
+      expect(cuttingFrames, greaterThan(30));
+      expect(sequence.sample(0)['scissors'].offset.dx, 125);
+      expect(sequence.sample(1)['upper'].offset, const Offset(0, -35));
+    },
+  );
+
+  test(
+    'The strip translates through the cap instead of appearing in place',
+    () {
+      final sequence = PetPlanterSteps.steps[2].sequence;
+      final initial = sequence.sample(0);
+      final fed = sequence.sample(
+        (sequence.leadingHold + sequence.clips.first.duration).inMicroseconds /
+            sequence.duration.inMicroseconds,
+      );
+      Offset tip(MotionFrame value) {
+        final metric = PetStripPainter(
+          value,
+          2,
+        ).buildPath().computeMetrics().single;
+        return metric.getTangentForOffset(metric.length)!.position;
+      }
+
+      final holeY = 65 + initial['cap'].offset.dy;
+      expect(tip(initial).dy, lessThan(holeY));
+      expect(tip(fed).dy, greaterThan(holeY));
+      expect(initial['cap'].offset, fed['cap'].offset);
+      expect(fed['strip'].offset, Offset.zero);
+    },
+  );
+
   testWidgets('Starts automatically and repeats beyond two complete cycles', (
     tester,
   ) async {
     await app(tester);
     expect(frame(tester)['upper'].offset, Offset.zero);
-    await tester.pump(const Duration(milliseconds: 1350));
-    final moving = frame(tester)['upper'].offset.dy;
+    await tester.pump(const Duration(milliseconds: 1650));
+    final moving = frame(tester)['scissors'].offset.dx;
     expect(moving, lessThan(0));
-    expect(moving, greaterThan(-35));
+    expect(moving, greaterThan(-110));
+    expect(frame(tester)['upper'].offset, Offset.zero);
     await tester.pump(PetPlanterSteps.steps.first.sequence.duration);
-    expect(frame(tester)['upper'].offset.dy, closeTo(moving, .01));
+    expect(frame(tester)['scissors'].offset.dx, closeTo(moving, .01));
     await tester.pump(PetPlanterSteps.steps.first.sequence.duration);
-    expect(frame(tester)['upper'].offset.dy, closeTo(moving, .01));
+    expect(frame(tester)['scissors'].offset.dx, closeTo(moving, .01));
     expect(tester.binding.transientCallbackCount, greaterThan(0));
     await tester.pumpWidget(const SizedBox());
     expect(tester.binding.transientCallbackCount, 0);
@@ -234,16 +289,16 @@ void main() {
     tester,
   ) async {
     await app(tester);
-    await tester.pump(const Duration(milliseconds: 1300));
+    await tester.pump(const Duration(milliseconds: 1650));
     await press(tester, 'motion-playback');
-    final paused = frame(tester)['upper'].offset;
+    final paused = frame(tester)['scissors'].offset;
     expect(find.text('Animasyonu devam ettir'), findsOneWidget);
     await tester.pump(const Duration(seconds: 8));
-    expect(frame(tester)['upper'].offset, paused);
+    expect(frame(tester)['scissors'].offset, paused);
     await press(tester, 'motion-playback');
     expect(find.text('Animasyonu duraklat'), findsOneWidget);
     await tester.pump(const Duration(milliseconds: 400));
-    expect(frame(tester)['upper'].offset, isNot(paused));
+    expect(frame(tester)['scissors'].offset, isNot(paused));
     await tester.pumpWidget(const SizedBox());
   });
 
@@ -319,7 +374,7 @@ void main() {
       ),
     );
     expect(find.textContaining('Çizim gösterilemiyor'), findsOneWidget);
-    expect(find.text(planter.steps.first), findsOneWidget);
+    expect(find.text(PetPlanterSteps.steps.first.description), findsOneWidget);
     expect(tester.takeException(), isNull);
   });
 
@@ -327,8 +382,8 @@ void main() {
     'Changing the system motion preference stops and restarts playback',
     (tester) async {
       await app(tester);
-      await tester.pump(const Duration(milliseconds: 1350));
-      expect(frame(tester)['upper'].offset.dy, lessThan(0));
+      await tester.pump(const Duration(milliseconds: 1650));
+      expect(frame(tester)['scissors'].offset.dx, lessThan(125));
       await app(tester, reduced: true);
       expect(frame(tester)['upper'].offset, const Offset(0, -35));
       await tester.pumpAndSettle();
@@ -372,7 +427,11 @@ void main() {
           );
           var count = 0;
           for (var p = 0; p < data!.lengthInBytes; p += 4) {
-            if (data.getUint8(p) < 150 && data.getUint8(p + 1) < 150) count++;
+            if (data.getUint8(p) < 190 &&
+                data.getUint8(p + 1) < 190 &&
+                data.getUint8(p + 2) < 190) {
+              count++;
+            }
           }
           image.dispose();
           return count;
@@ -383,15 +442,20 @@ void main() {
     },
   );
 
-  testWidgets('All other recipes keep text-only step media', (tester) async {
+  testWidgets('All twenty non-PET recipes have registered animation media', (
+    tester,
+  ) async {
     for (final project in catalog.where((p) => p.id != planter.id)) {
       await app(tester, child: RecipeStepViewer(project: project));
-      expect(find.byType(RecipeMotionPlayer), findsNothing);
+      expect(find.byType(RecipeMotionPlayer), findsOneWidget);
       expect(
         tester.widget<RecipeStepCard>(find.byType(RecipeStepCard)).media,
-        isNull,
+        isA<RecipeMotionPlayer>(),
       );
-      expect(find.text(project.steps.first), findsOneWidget);
+      expect(
+        tester.widget<RecipeStepCard>(find.byType(RecipeStepCard)).text,
+        project.steps.first,
+      );
     }
   });
 
@@ -412,6 +476,9 @@ void main() {
       ),
     );
     await tester.tap(find.text('Aç'));
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 500));
+    await tester.tap(find.byKey(const Key('start-building')));
     await tester.pump();
     await tester.pump(const Duration(milliseconds: 500));
     final state = tester.state(find.byType(RecipeMotionPlayer));
@@ -495,13 +562,28 @@ void main() {
       for (var i = 0; i < frames; i++) {
         await tester.pump(const Duration(milliseconds: 50));
         await capture(
-          '.dart_tool/design-preview/stage4-frames/frame${(frameNumber++).toString().padLeft(4, '0')}.png',
+          '.dart_tool/design-preview/pet-vector-frames/frame${(frameNumber++).toString().padLeft(4, '0')}.png',
         );
         if (i == frames - 2) {
-          await capture('.dart_tool/design-preview/pet-step-${index + 1}.png');
+          await capture(
+            '.dart_tool/design-preview/pet-vector-step-${index + 1}.png',
+          );
+        }
+        if (index == 0 && i == 40) {
+          await capture('.dart_tool/design-preview/pet-vector-cutting.png');
+        }
+        if (index == 2 && i == 30) {
+          await capture('.dart_tool/design-preview/pet-vector-threading.png');
+        }
+        if (index == 3 && i == 35) {
+          await capture('.dart_tool/design-preview/pet-vector-rotation.png');
         }
       }
     }
     await tester.pumpWidget(const SizedBox());
+    await tester.runAsync(
+      () => File('.dart_tool/design-preview/pet-vector-recording.json')
+          .writeAsString(jsonEncode({'frame_count': frameNumber, 'fps': 20})),
+    );
   });
 }

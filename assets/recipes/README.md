@@ -1,24 +1,20 @@
 # Onaylı tarif kütüphanesi
 
-`projects.json` onaylı 21 kimliği ve 21 tarif kaydını içerir. İlk 12 kayıt aynen
-korunmuş, istenen dokuz yeni tarif `project_40`–`project_48` olarak eklenmiştir.
+`projects.json` onaylı 17 kimliği ve 17 aktif tarif kaydını içerir.
+Katalogdan çıkarılması istenen beş kayıt ve bu kayıtların onay kimlikleri silinmiştir.
+Kalan tariflerin malzemeleri, miktarları ve adımları korunmuştur.
 Tarif miktarları ve adımları bu dosyadan yüklenir.
 Eski mock tarifler uygulamadan kaldırıldı. Test dosyalarındaki sentetik veriler asset'e eklenmez.
 
-Kütüphanedeki 21 tarif:
+Kütüphanedeki 17 tarif:
 
 | Kimlik | Tarif |
 |---|---|
 | project_01 | Karton Rulo Masa Düzenleyici |
-| project_02 | Çekmece İçi Kablo Düzenleyici |
 | project_03 | Geri Dönüşüm XOX Oyunu |
-| project_05 | Karton Kapaklı Fotoğraf Çerçevesi |
-| project_06 | Anı ve Şükran Kavanozu |
 | project_15 | Şişe Bowling Oyunu |
 | project_19 | Renk Eşleştirme Hafıza Oyunu |
-| project_20 | Karton Kutu Hedef Vurma Oyunu |
 | project_26 | Karton Dürbün Oyuncak |
-| project_28 | Çekmece İçi Kağıt Ayraçlı Kutu |
 | project_38 | Örgü İpi Kasesi |
 | project_39 | Ritim Davulu |
 | project_40 | Kendini Sulayan PET Saksı |
@@ -30,6 +26,7 @@ Kütüphanedeki 21 tarif:
 | project_46 | Karton Çekmece İçi Izgara Ayraç |
 | project_47 | Cam Kavanozdan Meyve Sineği Tuzağı |
 | project_48 | Yumurta Kolisinden Mangala Oyunu |
+| project_49 | Kâğıt Bardaktan Mini Masa Çöp Kutusu |
 
 ## Asset sözleşmesi
 
@@ -55,11 +52,13 @@ Tarif kaydında beklenen alanlar:
 
 JSON farklı iç içe yapılar kullanacaksa veri kaybı olmadan
 parser uyarlanmalı; eksik içerik tahmin edilmemelidir. `image_prompt` modelde
-saklanır, bu aşamada görsel üretimi yapılmaz.
+saklanır ve görsel üretiminde başlangıç noktasıdır; görsel adresi olarak kullanılmaz.
+Aktif 17 tarifin AI temsili ürün görselleri `photos/` altında, tarif kimliklerine
+göre saklanır. Kart ve detay ekranları aynı yerel eşlemeyi ve vektör fallback'i kullanır.
 
 Malzeme kimlikleri Gemini/onay ekranıyla aynı olmalıdır. Bilinen kimlikler:
 `pet_bottle`, `plastic_cap`, `cardboard_box`, `cardboard_roll`, `clean_paper`,
-`glass_jar`, `metal_can`, `plastic_packaging`, `yogurt_container`, `egg_carton`. Yeni bir içerik kimliği kendiliğinden
+`glass_jar`, `metal_can`, `plastic_packaging`, `yogurt_container`, `egg_carton`, `paper_cup`. Yeni bir içerik kimliği kendiliğinden
 başka kategoriye eşlenmez; envanterde yoksa eksik olarak gösterilir.
 
 Yardımcı malzemeler yalnızca detayda gösterilir. Eşleştirme her tarif için bağımsızdır;
@@ -72,6 +71,10 @@ girer. Diğerleri mevcut arayüzde ayrı eksik malzeme bölümünde, gereken ade
 gösterilir; uygun tarif olarak işaretlenmez. Yardımcı malzemelerin temini ve kapak,
 kap boyutu gibi nitelikler tarifte ayrıca kontrol edilir. `egg_carton` karton koli
 içindir; plastik yumurta ambalajı otomatik olarak bu kategoriye eşlenmez.
+`paper_cup` temiz, kuru ve sağlam kâğıt/karton içecek bardağı içindir;
+plastik bardak, cam bardak, bardak kılıfı ve karton ruloyla karıştırılmaz.
+Gemini algılamasından sonra ayrı aday filtresi, elektronik eşyaları ve katalogda
+karşılığı olmayan nesneleri önerilerden çıkarır. Kullanıcı onayı yine gereklidir.
 
 ## İçerik ve güvenlik notları
 

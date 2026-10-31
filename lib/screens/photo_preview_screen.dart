@@ -6,6 +6,8 @@ import '../core/app_theme.dart';
 import '../models/material_item.dart';
 import '../services/analysis_service.dart';
 import '../services/photo_service.dart';
+import '../services/recipe_repository.dart';
+import '../services/material_candidate_filter.dart';
 import '../widgets/analysis_photo.dart';
 import '../widgets/flow_notice.dart';
 import '../widgets/page_body.dart';
@@ -41,14 +43,20 @@ class _PhotoPreviewScreenState extends State<PhotoPreviewScreen> {
     super.dispose();
   }
 
-  Future<void> _openMaterials(List<MaterialItem>? items) async {
+  Future<void> _openMaterials(
+    List<MaterialItem>? items, {
+    String? explanation,
+  }) async {
     if (_opening) return;
     setState(() => _opening = true);
     try {
       await Navigator.push(
         context,
         MaterialPageRoute<void>(
-          builder: (_) => MaterialConfirmationScreen(initialItems: items),
+          builder: (_) => MaterialConfirmationScreen(
+            initialItems: items,
+            candidateExplanation: explanation,
+          ),
         ),
       );
     } finally {
@@ -109,8 +117,16 @@ class _PhotoPreviewScreenState extends State<PhotoPreviewScreen> {
         _photo,
       );
       if (!mounted) return;
+      final catalog = await RecipeRepository(
+        bundle: DefaultAssetBundle.of(context),
+      ).load();
+      final selection = MaterialCandidateFilter.select(items, catalog);
+      if (!mounted) return;
       setState(() => _analyzing = false);
-      await _openMaterials(items);
+      await _openMaterials(
+        selection.candidates,
+        explanation: selection.explanation,
+      );
     } on AnalysisException catch (error) {
       if (mounted) setState(() => _error = error.message);
     } catch (_) {

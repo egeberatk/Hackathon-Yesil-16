@@ -1,15 +1,10 @@
 {
   "approved_ids": [
     "project_01",
-    "project_02",
     "project_03",
-    "project_05",
-    "project_06",
     "project_15",
     "project_19",
-    "project_20",
     "project_26",
-    "project_28",
     "project_38",
     "project_39",
     "project_40",
@@ -20,7 +15,8 @@
     "project_45",
     "project_46",
     "project_47",
-    "project_48"
+    "project_48",
+    "project_49"
   ],
   "projects": [
     {
@@ -60,40 +56,6 @@
       "image_prompt": "A desk organizer made of three cardboard toilet paper rolls taped upright onto a flat piece of cardboard, holding colorful pens and pencils, placed on a tidy desk."
     },
     {
-      "id": "project_02",
-      "name": "Çekmece İçi Kablo Düzenleyici",
-      "description": "Kabloların birbirine dolanmasını engelleyen pratik bir düzenleyici.",
-      "required_materials": [
-        {
-          "material_id": "cardboard_box",
-          "quantity": 1,
-          "name": "Karton kutu"
-        },
-        {
-          "material_id": "cardboard_roll",
-          "quantity": 6,
-          "name": "Karton rulo"
-        }
-      ],
-      "required_supplies": [
-        "Bant"
-      ],
-      "optional_supplies": [],
-      "category": "organizasyon",
-      "difficulty": "kolay",
-      "estimated_minutes": 10,
-      "steps": [
-        "Karton kutunun çekmecenize sığdığından emin olun, sığmıyorsa kutunun kapaklarını içe doğru katlayarak boyutunu küçültün.",
-        "Karton ruloları dik bir şekilde kutunun içine yan yana dizin.",
-        "Ruloların devrilmemesi için birbirlerine temas eden noktalarından bantlayın.",
-        "Şarj aletlerini ve USB kablolarını nazikçe sarın.",
-        "Her bir rulonun içine bir kablo yerleştirerek çekmecenizi organize edin."
-      ],
-      "practical_use": "Şarj aletleri ve kabloları düzenli, birbirine karışmadan saklamak için kullanılır.",
-      "safety_warning": "Kabloları çok sıkı katlamak veya düğümlemek iç tellere zarar verip yangın riski oluşturabilir, gevşekçe sarın.",
-      "image_prompt": "A top-down view of a cardboard box inside a drawer, filled with vertical cardboard toilet paper rolls. Each roll neatly holds a loosely coiled charging cable, minimalist organization."
-    },
-    {
       "id": "project_03",
       "name": "Geri Dönüşüm XOX Oyunu",
       "description": "Atık malzemelerden yapılan eğlenceli ve taşınabilir bir strateji oyunu.",
@@ -125,79 +87,6 @@
       "practical_use": "Evde veya seyahatte çocuklar ve yetişkinler için zeka geliştirici bir aktivite sunar.",
       "safety_warning": "Kapakları boyarken kullanılan kalemin mürekkebi cilde veya eşyalara bulaşabilir, oyun sonrası ellerinizi yıkayın.",
       "image_prompt": "A homemade Tic-Tac-Toe game using a flat piece of cardboard with a drawn grid. Colorful plastic bottle caps marked with X and O are placed on the squares."
-    },
-    {
-      "id": "project_05",
-      "name": "Karton Kapaklı Fotoğraf Çerçevesi",
-      "description": "Kişisel fotoğraflarınızı veya çizimlerinizi sergilemek için basit bir çerçeve.",
-      "required_materials": [
-        {
-          "material_id": "cardboard_box",
-          "quantity": 1,
-          "name": "Karton kutu"
-        },
-        {
-          "material_id": "clean_paper",
-          "quantity": 1,
-          "name": "Temiz kâğıt"
-        }
-      ],
-      "required_supplies": [
-        "Bant",
-        "Kalem"
-      ],
-      "optional_supplies": [
-        "Fotoğraf veya çizim"
-      ],
-      "category": "dekorasyon",
-      "difficulty": "kolay",
-      "estimated_minutes": 10,
-      "steps": [
-        "Karton kutunun kapaklarından birini katlama çizgisinden nazikçe kopararak dikdörtgen bir zemin elde edin.",
-        "Temiz kağıdı kartonun üzerine ortalayarak yerleştirin ve kenarlarından arkaya doğru katlayarak bantlayın.",
-        "Kağıdın kenarlarına kalemle bir çerçeve deseni çizin.",
-        "Çerçevenin ortasına bir fotoğrafınızı veya küçük bir çizimi bantlayın.",
-        "Kartonun arkasına rulo yaptığınız bir bant yapıştırarak duvara veya dolaba tutturun."
-      ],
-      "practical_use": "Boş duvarları veya panoları kişiselleştirmek için geri dönüştürülmüş dekorasyon sağlar.",
-      "safety_warning": "Duvara yapıştırırken kullanacağınız bandın duvar boyasını kaldırmaması için uygun kalitede bant kullanmaya dikkat edin.",
-      "image_prompt": "A rustic handmade photo frame made from a flat piece of cardboard wrapped in white paper, with drawn decorative borders, holding a small polaroid photo, taped to a wall."
-    },
-    {
-      "id": "project_06",
-      "name": "Anı ve Şükran Kavanozu",
-      "description": "Güzel anıları ve hedefleri biriktirebileceğiniz, motivasyon artırıcı bir araç.",
-      "required_materials": [
-        {
-          "material_id": "glass_jar",
-          "quantity": 1,
-          "name": "Cam kavanoz"
-        },
-        {
-          "material_id": "clean_paper",
-          "quantity": 2,
-          "name": "Temiz kâğıt"
-        }
-      ],
-      "required_supplies": [
-        "Kalem"
-      ],
-      "optional_supplies": [
-        "İp veya kurdele"
-      ],
-      "category": "dekorasyon",
-      "difficulty": "kolay",
-      "estimated_minutes": 5,
-      "steps": [
-        "Cam kavanozun içinin tamamen kuru ve temiz olduğundan emin olun.",
-        "Temiz kağıtları elinizle yavaşça yırtarak küçük kare parçalara ayırın.",
-        "Her bir kağıda o gün minnettar olduğunuz bir şeyi, güzel bir anıyı veya hedefinizi yazın.",
-        "Kağıtları ikiye katlayıp kavanozun içine atın.",
-        "Her gün veya haftada bir yeni kağıtlar ekleyerek kavanozu doldurun."
-      ],
-      "practical_use": "Kişisel gelişim ve farkındalık için moral verici, aynı zamanda rafta şık duran bir objedir.",
-      "safety_warning": "Cam kavanozun düşüp kırılması ciddi kesiklere yol açabilir, çocukların erişemeyeceği güvenli bir rafta muhafaza edin.",
-      "image_prompt": "A beautiful clear glass jar filled with folded pieces of clean paper containing written memories. The jar is sitting on a cozy nightstand next to a warm glowing lamp."
     },
     {
       "id": "project_15",
@@ -266,39 +155,6 @@
       "image_prompt": "10 plastic bottle caps faced down on a table. A hand is lifting one cap to reveal a piece of white paper inside colored with a bright blue marker. Memory game concept."
     },
     {
-      "id": "project_20",
-      "name": "Karton Kutu Hedef Vurma Oyunu",
-      "description": "İçeri kaydırma mekaniğine dayalı motor becerilerini geliştiren refleks oyunu.",
-      "required_materials": [
-        {
-          "material_id": "cardboard_box",
-          "quantity": 1,
-          "name": "Karton kutu"
-        },
-        {
-          "material_id": "plastic_cap",
-          "quantity": 5,
-          "name": "Plastik kapak"
-        }
-      ],
-      "required_supplies": [],
-      "optional_supplies": [
-        "Kalem"
-      ],
-      "category": "oyun",
-      "difficulty": "çok kolay",
-      "estimated_minutes": 5,
-      "steps": [
-        "Karton kutuyu, ağzı size veya oyuncuya bakacak şekilde yan olarak zemine veya geniş bir masaya yatırın.",
-        "İsteğe bağlı olarak kutunun iç tabanına puan bölgeleri çizebilirsiniz.",
-        "Kutudan bir metre kadar geriye gidin.",
-        "Plastik kapakları zeminde kaydırarak hızla kutunun içine sokmaya ve en yüksek puanı toplamaya çalışın."
-      ],
-      "practical_use": "Evde güvenle oynanabilecek, eşyalara zarar verme ihtimali düşük bir el-göz koordinasyonu oyunudur.",
-      "safety_warning": "Kapakları sertçe fırlatmak etraftaki cam eşyalara çarpıp kırılmaya veya göze gelerek yaralanmaya yol açabilir, sadece zeminden kaydırarak oynayın.",
-      "image_prompt": "A sideways cardboard box on a wooden floor acting as a goal. Colorful plastic bottle caps are scattered on the floor, sliding towards the open box."
-    },
-    {
       "id": "project_26",
       "name": "Karton Dürbün Oyuncak",
       "description": "Maceracı çocuklar için odaklanmayı eğlenceli hale getiren sahte dürbün.",
@@ -332,40 +188,6 @@
       "practical_use": "Hayal gücünü geliştiren korsanlık, kaşiflik veya doğa gözlemi oyunlarında kostüm aksesuarıdır.",
       "safety_warning": "Dürbünle bakarak yürümek çevresel görüşü daralttığı için çarpma ve düşme tehlikesi yaratabilir, yürürken veya merdiven inip çıkarken kullanmayın.",
       "image_prompt": "A handmade toy binocular crafted by taping two cardboard toilet paper rolls together, wrapped in paper with hand-drawn camouflage patterns."
-    },
-    {
-      "id": "project_28",
-      "name": "Çekmece İçi Kağıt Ayraçlı Kutu",
-      "description": "Faturaları, notları veya küçük kağıtları tasnif etmek için dosyalamalı kutu.",
-      "required_materials": [
-        {
-          "material_id": "cardboard_box",
-          "quantity": 1,
-          "name": "Karton kutu"
-        },
-        {
-          "material_id": "clean_paper",
-          "quantity": 2,
-          "name": "Temiz kâğıt"
-        }
-      ],
-      "required_supplies": [
-        "Bant"
-      ],
-      "optional_supplies": [],
-      "category": "organizasyon",
-      "difficulty": "orta",
-      "estimated_minutes": 15,
-      "steps": [
-        "Karton kutunun kapaklarını içe doğru katlayın.",
-        "Kağıtlardan birini kutunun iç tabanına temiz bir zemin olarak yerleştirin ve bantlayın.",
-        "Diğer kağıdı akordeon gibi zigzag şeklinde katlayın.",
-        "Bu zigzaglı kağıdı kutunun içine dik olarak yerleştirin ve uçlarını kutunun yanlarına bantlayın.",
-        "Oluşan her bir kıvrım arasına farklı faturaları, zarfları veya fişleri dosyalayın."
-      ],
-      "practical_use": "Masa üstündeki veya çekmecedeki karışık evrak yığınlarını düzenleyerek aranan belgenin bulunmasını kolaylaştırır.",
-      "safety_warning": "Kağıt kenarlarını katlarken ellerinizde derin olmayan fakat acıtan kağıt kesikleri oluşabilir, dikkatli katlayın.",
-      "image_prompt": "A small cardboard box acting as an inbox tray on a desk. Inside, a piece of white paper is folded like an accordion, separating different mail envelopes and receipts."
     },
     {
       "id": "project_38",
@@ -750,6 +572,34 @@
       "practical_use": "İki kişilik sayı sayma, planlama ve sıra bekleme etkinliği sağlar; oyun taşları ayrı kaplarda saklanarak tekrar kullanılabilir.",
       "safety_warning": "Küçük taşlar ve fasulyeler boğulma tehlikesidir; üç yaş altına uygun değildir. Daha büyük çocuklar da yetişkin gözetiminde oynamalı; taşları ağza almamalıdır. Yumurtayla kirlenmiş veya küflü koliyi kullanmayın. Oyun için ayrılan fasulyeleri sonrasında yemeyin.",
       "image_prompt": "A homemade mancala board using one clean twelve-cup cardboard egg carton with two rows of six wells, four dry beans per well and two small clean yogurt containers at the ends as stores, on a dry tabletop with adult supervision."
+    },
+    {
+      "id": "project_49",
+      "name": "Kâğıt Bardaktan Mini Masa Çöp Kutusu",
+      "description": "Küçük kâğıt kırpıntılarını ve silgi artıklarını kuru bir kâğıt bardakta topla.",
+      "required_materials": [
+        {
+          "material_id": "paper_cup",
+          "quantity": 1,
+          "name": "Temiz, kuru ve sağlam kâğıt bardak"
+        }
+      ],
+      "required_supplies": [],
+      "optional_supplies": [
+        "Kalem veya etiket"
+      ],
+      "category": "organizasyon",
+      "difficulty": "çok kolay",
+      "estimated_minutes": 5,
+      "steps": [
+        "Temiz, tamamen kuru ve ezilmemiş bir kâğıt bardak seç. Yağlı, ıslak veya küflü bardak kullanma.",
+        "İstersen dışına küçük bir etiket ekle veya kalemle kullanım amacını yaz. Bardağın içini kapatma.",
+        "Bardağı düz ve kuru bir masa yüzeyine dik koy. Hafif kâğıt kırpıntılarını veya silgi artıklarını içine at.",
+        "Dolmadan boşalt ve kuru tut. Yumuşamış, yırtılmış veya kirlenmiş bardağı değiştir."
+      ],
+      "practical_use": "Küçük masa atıklarını toplar; bardak sağlam ve temiz kaldığı sürece kuru atıklar için tekrar kullanılabilir.",
+      "safety_warning": "Sıvı, sıcak atık, pil, cam veya keskin parça koyma. Yiyecek ve içecek için yeniden kullanma; devrilmeyecek yerde tut.",
+      "image_prompt": "A real clean paper drinking cup reused as a tiny desktop dry scrap bin, upright on a dry desk, a few small paper clippings inside, simple handwritten label, no liquids or sharp waste."
     }
   ]
 }
